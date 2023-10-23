@@ -1,0 +1,35 @@
+{% extends "baseGymEspacio.html"%} {% load static %} {% block head %}
+<title>Gimnasio</title>
+{% endblock %} {% block body %}
+
+<div id="carouselExampleFade" class="container px-4 px-lg-5 mt-5 mb-5 carousel slide carousel-fade">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img
+        src="{% static 'img/banner' %}"
+        class="d-block mx-auto img-carousel"
+        alt="..."
+      />
+    </div>
+  </div>
+</div>
+
+<!-- ========================= NOTICIAS ========================= -->
+
+<div class="container px-4 px-lg-5 mt-5 mb-5">
+  <h2>Noticias</h2>
+  <div class="card text-center" id="pb">
+    <div class="card-header text-black">Última noticia</div>
+    <div class="card-body">
+      <h5 class="card-title">¡Maquinas agregadas!</h5>
+      <p class="card-text text-black">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus nostrum
+        natus fugit dolorem tempore adipisci reiciendis itaque perspiciatis
+        consequuntur debitis?
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+<!-- ========================= FINAL - NOTICIAS ========================= -->

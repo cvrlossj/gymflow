@@ -1,0 +1,67 @@
+{% extends "baseGymEspacio.html" %} {% load static %} {% block head %}
+<title>Lista de Maquinas</title>
+{% endblock %} {% block body %}
+<!-- ========================= SECTION PAGETOP ========================= -->
+<header class="bg-warning py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Lista de Maquinas</h1>
+    </div>
+  </div>
+</header>
+
+<!-- ========================= LISTA DE MAQUINAS ========================= -->
+<div class="container">
+  <a href="/agregarproducto" class="btn btn-primary mt-4 mb-2"
+    ><i class="bi bi-plus-circle-fill"></i> Agregar nueva maquina</a
+  >
+</div>
+
+<div class="container mt-4 mb-4">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <div class="table-responsive">
+        <table class="table caption-top">
+          <caption>
+            Lista de Maquinas
+          </caption>
+          <thead>
+            <tr>
+              <th class="centered" scope="col">ID</th>
+              <th class="centered" scope="col">Nombre</th>
+              <th class="centered" scope="col">Zona Muscular</th>
+              <th class="centered" scope="col">Descripción</th>
+              <th class="centered" scope="col">Enlace Tutorial</th>
+              <th class="centered" scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for m in maq %}
+            <tr>
+              <th scope="row">{{m.id}}</th>
+              <td>{{m.nombre}}</td>
+              <td>{{m.zona_muscular}}</td>
+              <td>{{m.descripcion}}</td>
+              <td>
+                <a href="{{ m.enlace_tutorial }}" target="_blank"
+                  >{{ m.enlace_tutorial }}</a
+                >
+              </td>
+              <td>
+                <a href="/editarProducto/{{p.sku}}" class="btn btn-primary"
+                  >Editar</a
+                >
+                <a href="/eliminarProducto/{{p.sku}}" class="btn btn-danger"
+                  >Eliminar</a
+                >
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
