@@ -21,3 +21,7 @@ Sigue estos pasos para configurar el entorno de desarrollo:
 3. Abre tu navegador y accede a http://localhost:8000/ para ver la aplicación en funcionamiento.
 
 * admin -> 123
+ ``` [language]
+ Código en 
+ varias líneas
+ ```
