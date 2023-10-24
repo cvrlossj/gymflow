@@ -15,13 +15,14 @@ Antes de comenzar con el desarrollo en este proyecto, asegúrate de tener los si
 Sigue estos pasos para configurar el entorno de desarrollo:
 
 1. Clona el repositorio desde GitHub:
-    `https://github.com/cvrlossj/gymflow.git`
+    ``` [language]
+    https://github.com/cvrlossj/gymflow.git
+     ```
 2. Ejecuta el servidor de desarrollo:
-   `python manage.py runserver`
-3. Abre tu navegador y accede a http://localhost:8000/ para ver la aplicación en funcionamiento.
+   ``` [language]
+    python manage.py runserver
+     ```
+4. Abre tu navegador y accede a http://localhost:8000/ para ver la aplicación en funcionamiento.
 
 * admin -> 123
- ``` [language]
- Código en 
- varias líneas
- ```
+
