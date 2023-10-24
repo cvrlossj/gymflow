@@ -1,0 +1,57 @@
+{% extends "baseGymEspacio.html" %} 
+{% load static %} 
+
+{% block head %}
+<title>Configuracion</title>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10 col-xl-8 mx-auto">
+            <h2 class="h3 mb-4 page-title"></h2>
+            <div class="my-4">
+                <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="" role="tab" aria-controls="home" aria-selected="false">Configuracion del GymEspacio</a>
+                    </li>
+                </ul>
+                <form>
+                    
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="txtNombre">Nombre del Gimnasio: </label>
+                            <input type="text" id="txtNombre" class="form-control" placeholder="" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="txtDireccion">Dirección:</label>
+                            <input type="text" id="txtDireccion" class="form-control" placeholder="Av. Vicuña Mackenna 4917" />
+                        </div>
+                    </div>
+
+                    <div class="form-grou col-md-6">
+                        <label for="txtTelefono">Teléfono:</label>
+                        <input type="text" class="form-control" id="txtTelefono" placeholder="(22) 12345678" />
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="txtCorreo">Correo:</label>
+                        <input type="email" class="form-control" id="txtCorreo" placeholder="brown@asher.me" />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="txtContrasenia">Contraseña</label>
+                            <input type="password" class="form-control" id="txtContrasenia"/>
+                        </div>
+                    </div>
+                    <hr class="my-4" />
+                   
+                    <button type="submit" class="btn btn-primary mb-5">Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    </div>
+{% endblock %}

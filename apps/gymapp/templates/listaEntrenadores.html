@@ -1,0 +1,109 @@
+{% extends "baseGymEspacio.html" %}
+{% load static %}
+
+{% block head %}
+<title>Lista de Entrenadores</title>
+{% endblock head %}
+
+
+{% block body %}
+<!-- ========================= SECTION PAGETOP ========================= -->
+<header class="bg-warning py-5">
+    <div class="container px-4 px-lg-5 my-5">
+      <div class="text-center text-white">
+        <h1 class="display-4 fw-bolder">Lista de entrenadores</h1>
+      </div>
+    </div>
+  </header>
+
+<!-- ========================= LISTA DE ENTRENADORES ========================= -->
+<div class="container">
+    <a href="/agregarentrenador" class="btn btn-success mt-4 mb-2"
+      ><i class="bi bi-person-add"></i> Agregar un nuevo entrenador</a
+    >
+    <hr class="my-4" />
+  </div>
+  
+
+{% comment %} 
+  <div class="container mt-4 mb-4">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="table-responsive">
+          <table class="table caption-top">
+            <caption>
+              Listado de Entrenadores
+            </caption>
+            <thead>
+              <tr>
+                <th class="centered" scope="col">ID</th>
+                <th class="centered" scope="col">Nombre</th>
+                <th class="centered" scope="col">Apellido</th>
+                <th class="centered" scope="col">Servicios</th>
+                <th class="centered" scope="col">Correo</th>
+                <th class="centered" scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for e in ent %}
+              <tr>
+                <th scope="row">{{e.id}}</th>
+                <td>{{e.nombre}}</td>
+                <td>{{e.apellido}}</td>
+                <td>{{e.servicios}}</td>
+                <td>{{e.correo}}</td>
+                </td>
+                <td>
+                  <a href="/editarMaquina/{{m.id}}" class="btn btn-primary"><i class="bi bi-pencil-square"></i> Editar</a>
+                  <a href="/eliminarMaquina/{{m.id}}" class="btn btn-danger"><i class="bi bi-trash"></i> Eliminar</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div> {% endcomment %}
+
+  <!-- ========================= LISTA DE ENTRENADORES ========================= -->
+<section class="">
+  <div class="container mt-4 mb-4">
+      <h2 class="mb-5">Entrenadores</h2>
+      <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+      {% for e in ent %}  
+          <div class="col mb-5">
+                  <div class="card h-100">
+                      <!-- Price badge-->
+                      <div class="badge bg-primary text-white position-absolute" style="top: 0.5rem; right: 0.5rem">{{e.id}}</div>
+                      <!-- Imagen de Entrenadores (general)-->
+                      {% comment %} <img class="card-img-top" src="{{p.imagen.url}}" alt="..." /> {% endcomment %}
+                      <!-- Detalles entrenador-->
+                      <div class="card-body p-4">
+                          <div class="text-center">
+                              <!-- Nombre entrenador-->
+                              <h5 class="fw-bolder">{{e.nombre}} {{e.apellido}}</h5>
+                              <!-- Servicios entrenador-->
+                              <span class="text-muted">{{e.servicios}}</span>
+                          </div>
+                      </div>
+                      <!-- acciones entrenador-->
+                      <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                          <div class="text-center">
+                                  <a href="/editarMaquina/{{m.id}}" class="btn btn-primary"><i class="bi bi-pencil-square"></i> Editar</a>
+                                  <a href="/eliminarMaquina/{{m.id}}" class="btn btn-danger"><i class="bi bi-trash"></i> Eliminar</a>
+                              
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          {% endfor %}
+      </div>
+  </div>
+</section>
+
+{% endblock body %}
+
+
+

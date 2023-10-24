@@ -52,7 +52,16 @@ def editarMaquina(request):
     return redirect('/lista')
 
 
-def eliminarMaquina(request,id):
+def eliminarMaquina(request, id):
     maquina = Maquina.objects.get(id=id)
     maquina.delete()
     return redirect('/lista')
+
+
+def cargarPerfilGymEspacio(request):
+    return render(request, "perfilGymEspacio.html")
+
+
+def cargarEntrenadores(request):
+    entrenadores = Entrenador.objects.all()
+    return render(request, "listaEntrenadores.html", {"ent": entrenadores})

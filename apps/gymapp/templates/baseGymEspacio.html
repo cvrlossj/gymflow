@@ -29,21 +29,20 @@
 
    {% comment %} Contenido {% endcomment %}
     <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-black">
+
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand">Gimnasio</a>
+            <a class="navbar-brand text-white">GymFlow</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <!-- <li class="nav-item"><a class="nav-link" aria-current="page" href="#">
-                      <i class="bi bi-person-fill"></i> Clientes</a>
-                    </li> -->
+              
                     <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                      <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
                       data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="bi bi-archive-fill"></i> Mi gimnasio
+                      <i class="bi bi-archive-fill text-white"></i> Mi gimnasio
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <li><a class="dropdown-item" href="/agregarmaquina"><i class="bi bi-plus-square"></i>
@@ -56,24 +55,27 @@
                     </ul>
 
                     <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                      <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
                       data-bs-toggle="dropdown" aria-expanded="false">
                       <i class="bi bi-tags"></i> Personas
                     </a>
+
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="/entrenadores"><i class="bi bi-person-vcard-fill"></i> Lista de Entrenadores</a></li>
-                        <li><a class="dropdown-item" href="/miperfil"><i class="bi bi-gear"></i> Mi Perfil</a></li>
+                        <li><a class="dropdown-item" href="/entrenadores"><i class="bi bi-person-vcard-fill"></i> Lista de GymUser</a></li>
                       </li>
+      
                     </ul>
 
+ 
                     {% comment %} <li class="nav-item"><a class="nav-link active" aria-current="page" href="/noticias">
                         <i class="bi bi-newspaper"></i> Noticias</a>
                     </li> {% endcomment %}
                       
 
-                    <!-- <li class="nav-item"><a class="nav-link" aria-current="page" href="#">
-                            <i class="bi bi-mailbox"></i> Despachos</a>
-                    </li> -->
+                    <li class="nav-item text-white"><a class="nav-link text-white" aria-current="page" href="/configuracion">
+                        <i class="bi bi-gear"></i> Configuración</a>
+                    </li>
                 </ul>
 
                 <div class="d-flex">
@@ -94,7 +96,7 @@
     {% comment %} Inicio Footer {% endcomment %}
      <footer class="py-5 bg-black">
         <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; </p>
+            <p class="m-0 text-center text-white">Copyright &copy; GymFlow</p>
         </div>
     </footer>
     {% comment %} End Footer {% endcomment %}
