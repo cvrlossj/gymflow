@@ -28,7 +28,7 @@ class Entrenador(models.Model):
     servicios = models.TextField()
     correo = models.CharField(max_length=100)
     contrasenia = models.CharField(max_length=100)
-    id_tipo = models.ForeignKey(TipoUsuario, on_delete=models.CASCADE)
+    id_tipo = models.ForeignKey(TipoUsuario, on_delete=models.CASCADE, default=2)
     id_gymespacio = models.ForeignKey('GymEspacio', on_delete=models.CASCADE)
 
     def __str__(self):

@@ -1,0 +1,167 @@
+{% extends "baseGymEspacio.html" %} {% load static %} {% block head %}
+<title>Agregar un Entrenador</title>
+{% endblock %} {% block body %}
+<!-- Header-->
+<header class="bg-warning py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Agregar un Entrenador</h1>
+    </div>
+  </div>
+</header>
+
+{% comment %} <div class="container">
+  <div class="row justify-content-center">
+      <div class="col-12 col-lg-10 col-xl-8 mx-auto">
+          <h2 class="h3 mb-4 page-title"></h2>
+          <div class="my-4">
+              <form  id="agregarEntrenadorForm" action="/agregarEntrenadorForm" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                  
+                  </div>
+                  <div class="form-row">
+                      <div class="form-group col-md-6 mb-2">
+                          <label for="txtNombre">Nombre: </label>
+                          <input type="text" name="txtNombre" id="txtNombre" class="form-control" placeholder="" />
+                      </div>
+                      <div class="form-group col-md-6 mb-2">
+                          <label for="txtApellido">Apellido:</label>
+                          <input type="text" id="txtApellido" class="form-control" placeholder="" />
+                      </div>
+                  </div>
+
+                  <div class="form-grou col-md-12 mb-2">
+                      <label for="txtServicio">Servicios:</label>
+                      <input type="text" class="form-control" id="txtServicio" placeholder="" />
+                  </div>
+
+                  <div class="form-group col-md-6 mb-2">
+                      <label for="txtCorreo">Correo:</label>
+                      <input type="email" class="form-control" id="txtCorreo" placeholder="brown@asher.me" />
+                  </div>
+                  <div class="form-row">
+                      <div class="form-group col-md-6 mb-2">
+                          <label for="txtContrasenia">Contraseña</label>
+                          <input type="password" class="form-control" id="txtContrasenia"/>
+                      </div>
+                  </div>
+
+                  
+                  <div class="col-md-3">
+                    <div class="form-group mb-3">
+                      <label for="cmbGim">Gimnasio:</label>
+                      <select name="cmbGim" id="cmbGim" class="form-select"> 
+                        <option disabled selected>Seleccione</option>
+                        {% for g in gim %}
+                        <option value="{{g.id}}">{{g.nombre}}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <hr class="my-4" />
+                 
+                  <button type="submit" class="btn btn-primary mb-5">Guardar Cambios</button>
+              </form>
+          </div>
+      </div>
+  </div>
+  
+  </div> {% endcomment %}
+
+
+<form id="agregarEntrenadorForm" action="/agregarEntrenadorForm" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="container mt-5 mb-5">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group mb-3">
+          <label for="txtEntrenador">Nombre del entrenador<small> *</small></label>
+          <input
+            name="txtEntrenador"
+            id="txtEntrenador"
+            type="text"
+            class="form-control"
+            placeholder="John"
+          />
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="form-group mb-3">
+          <label for="txtApellido">Apellido<small> *</small></label>
+          <input
+            name="txtApellido"
+            id="txtApellido"
+            type="text"
+            class="form-control"
+            placeholder="Doe"
+          />
+        </div>
+      </div>
+
+
+      <div class="col-md-4">
+        <div class="form-group mb-3">
+          <label for="cmbGim">Gimnasio<small> *</small></label>
+          <select name="cmbGim" id="cmbGim" class="form-select"> 
+            <option disabled selected>Seleccione</option>
+            {% for g in gim %}
+            <option value="{{g.id}}">{{g.nombre}}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="form-group mb-3">
+          <label for="txtServicio">Servicios<small> *</small></label>
+          <input
+            name="txtServicio"
+            id="txtServicio"
+            type="text"
+            class="form-control"
+            placeholder="Servicios del entrenador"
+          />
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="form-group mb-3">
+          <label for="txtCorreo">Correo<small> *</small></label>
+          <input
+            name="txtCorreo"
+            id="txtCorreo"
+            type="text"
+            class="form-control"
+            placeholder="johndoe@gmail.com"
+          />
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="form-group mb-3">
+          <label for="txtPassword">Contraseña<small> *</small></label>
+          <input
+            name="txtPassword"
+            id="txtPassword"
+            type="password"
+            class="form-control"
+          />
+        </div>
+      </div>
+      
+
+      <div id="alerta" class="alert alert-danger" style="display: none"></div>
+
+      <hr class="my-4" />
+      <div class="form-group mt-2">
+        <button id="btnEnviar" type="submit" class="btn btn-success">
+          <i class="bi bi-plus-circle-fill"></i> Registrar entrenador
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+
+{% endblock %} {% block script %}
+{% endblock script %}

@@ -22,7 +22,7 @@ def agregarMaquina(request):
     Maquina.objects.create(nombre=m_nombre, zona_muscular=m_zona_muscular,
                            descripcion=m_descripcion, enlace_tutorial=m_enlace)
 
-    return redirect('/lista')
+    return redirect('/maquinas')
 
 
 def cargarAgregarMaquina(request):
@@ -49,13 +49,13 @@ def editarMaquina(request):
 
     maquinaBD.save()
 
-    return redirect('/lista')
+    return redirect('/maquinas')
 
 
 def eliminarMaquina(request, id):
     maquina = Maquina.objects.get(id=id)
     maquina.delete()
-    return redirect('/lista')
+    return redirect('/maquinas')
 
 
 def cargarPerfilGymEspacio(request):
@@ -65,3 +65,23 @@ def cargarPerfilGymEspacio(request):
 def cargarEntrenadores(request):
     entrenadores = Entrenador.objects.all()
     return render(request, "listaEntrenadores.html", {"ent": entrenadores})
+
+
+def cargarAgregarEntrenadores(request):
+    gimnasio = GymEspacio.objects.all()
+    return render(request,"agregarEntrenador.html", {"gim": gimnasio})
+
+
+def agregarEntrenador(request):
+    e_nombre = request.POST['txtEntrenador']
+    e_apellido = request.POST['txtApellido']
+    e_gimnasio_id = request.POST['cmbGim']  # Obtén el ID del gimnasio como un número entero.
+    e_servicios = request.POST['txtServicio']
+    e_correo = request.POST['txtCorreo']
+    e_contrasenia = request.POST['txtPassword']
+
+    gimnasio = GymEspacio.objects.get(id=e_gimnasio_id)
+
+    Entrenador.objects.create(nombre=e_nombre, apellido=e_apellido, id_gymespacio=gimnasio, servicios=e_servicios, correo=e_correo, contrasenia=e_contrasenia)
+
+    return redirect('/entrenadores')
