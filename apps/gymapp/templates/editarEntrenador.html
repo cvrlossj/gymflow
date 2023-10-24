@@ -1,23 +1,44 @@
 {% extends "baseGymEspacio.html" %} {% load static %} {% block head %}
-<title>Agregar un Entrenador</title>
-{% endblock %} {% block body %}
+<title>Editar entrenador</title>
+{% endblock %} 
+
+{% block body %}
 <!-- Header-->
 <header class="bg-warning py-5">
   <div class="container px-4 px-lg-5 my-5">
     <div class="text-center text-white">
-      <h1 class="display-4 fw-bolder">Agregar un Entrenador</h1>
+      <h1 class="display-4 fw-bolder">Editar entrenador</h1>
     </div>
   </div>
 </header>
 
-<form id="agregarEntrenadorForm" action="/agregarEntrenadorForm" method="POST" enctype="multipart/form-data">
+<form action="/editarEntrenadorForm" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="container mt-5 mb-5">
     <div class="row">
+
+      <div class="row">
+        <div class="col-md-1">
+          <div class="form-group mb-3">
+            <label for="txtMaquina">ID<small> *</small></label>
+            <input
+              readonly
+              value="{{ent.id}}"
+              name="txtId"
+              id="txtId"
+              type="text"
+              class="form-control"
+              placeholder="ID"
+            />
+          </div>
+        </div>
+
+
       <div class="col-md-4">
         <div class="form-group mb-3">
           <label for="txtEntrenador">Nombre del entrenador<small> *</small></label>
           <input
+            value="{{ent.nombre}}"
             name="txtEntrenador"
             id="txtEntrenador"
             type="text"
@@ -31,6 +52,7 @@
         <div class="form-group mb-3">
           <label for="txtApellido">Apellido<small> *</small></label>
           <input
+           value="{{ent.apellido}}"
             name="txtApellido"
             id="txtApellido"
             type="text"
@@ -47,16 +69,17 @@
           <select name="cmbGim" id="cmbGim" class="form-select"> 
             <option disabled selected>Seleccione</option>
             {% for g in gim %}
-            <option value="{{g.id}}">{{g.nombre}}</option>
+              <option value="{{g.id}}" {% if g.id == ent.id_gymespacio.id %} selected {% endif %}>{{g.nombre}}</option>
             {% endfor %}
           </select>
         </div>
       </div>
-
+      
       <div class="col-md-12">
         <div class="form-group mb-3">
           <label for="txtServicio">Servicios<small> *</small></label>
           <input
+            value="{{ent.servicios}}"
             name="txtServicio"
             id="txtServicio"
             type="text"
@@ -70,6 +93,7 @@
         <div class="form-group mb-3">
           <label for="txtCorreo">Correo<small> *</small></label>
           <input
+            value="{{ent.correo}}"
             name="txtCorreo"
             id="txtCorreo"
             type="text"
@@ -83,6 +107,7 @@
         <div class="form-group mb-3">
           <label for="txtPassword">Contraseña<small> *</small></label>
           <input
+            value="{{ent.contrasenia}}"
             name="txtPassword"
             id="txtPassword"
             type="password"
@@ -95,14 +120,14 @@
       <div id="alerta" class="alert alert-danger" style="display: none"></div>
 
       <hr class="my-4" />
-      <div class="form-group mt-2">
+      <div class="form-group mt-2 mb-2">
         <button id="btnEnviar" type="submit" class="btn btn-success">
-          <i class="bi bi-plus-circle-fill"></i> Registrar entrenador
+          <i class="bi bi-pencil-square"></i> Editar entrenador
         </button>
       </div>
     </div>
+
   </div>
 </form>
 
-{% endblock %} {% block script %}
-{% endblock script %}
+{% endblock %}

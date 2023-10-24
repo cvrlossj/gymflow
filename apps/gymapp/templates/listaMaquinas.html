@@ -15,7 +15,7 @@
   <a href="/agregarmaquina" class="btn btn-success mt-4 mb-2"
     ><i class="bi bi-plus-circle-fill"></i> Agregar nueva maquina</a
   >
-  <a href="#" class="btn btn-primary mt-4 mb-2"
+  <a href="#" class="btn btn-primary mt-4 mb-2" id="scanButton"
     ><i class="bi bi-camera"></i> Escanear una maquina</a
   >
 </div>
@@ -67,4 +67,7 @@
   </div>
 </div>
 
-{% endblock %}
+{% endblock %} {% block script %}
+<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+<script src="{% static 'js/ScanQR.js' %}"></script>
+{% endblock script %}

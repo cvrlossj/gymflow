@@ -75,7 +75,6 @@
       {% for e in ent %}  
           <div class="col mb-5">
                   <div class="card h-100">
-                      <!-- Price badge-->
                       <div class="badge bg-primary text-white position-absolute" style="top: 0.5rem; right: 0.5rem">{{e.id}}</div>
                       <!-- Imagen de Entrenadores (general)-->
                       <img class="card-img-top" src="static/img/entrenador.jpg" alt="..." />
@@ -91,8 +90,8 @@
                       <!-- acciones entrenador-->
                       <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                           <div class="text-center">
-                                  <a href="/editarMaquina/{{m.id}}" class="btn btn-primary"><i class="bi bi-pencil-square"></i> Editar</a>
-                                  <a href="/eliminarMaquina/{{m.id}}" class="btn btn-danger"><i class="bi bi-trash"></i> Eliminar</a>
+                                  <a href="/editarEntrenador/{{e.id}}" class="btn btn-primary"><i class="bi bi-pencil-square"></i> Editar</a>
+                                  <a href="/eliminarEntrenador/{{e.id}}" class="btn btn-danger"><i class="bi bi-trash"></i> Eliminar</a>
                               
                           </div>
                       </div>

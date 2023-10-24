@@ -18,5 +18,7 @@ urlpatterns = [
     # Entrenador
     path('entrenadores', views.cargarEntrenadores),
     path('agregarentrenador', views.cargarAgregarEntrenadores),
-    path('agregarEntrenadorForm', views.agregarEntrenador)
+    path('agregarEntrenadorForm', views.agregarEntrenador),
+    path('editarEntrenador/<id>', views.cargarEditarEntrenador),
+    path('eliminarEntrenador/<id>', views.eliminarEntrenador)
 ]
