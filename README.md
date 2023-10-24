@@ -8,3 +8,16 @@ Antes de comenzar con el desarrollo en este proyecto, asegúrate de tener los si
 
 *  [Python](https://www.python.org/downloads/) (versión X.X o superior)
 * [pip](https://pip.pypa.io/en/stable/installation/) (herramienta de gestión de paquetes de Python)
+
+
+# Configuración del Entorno de Desarrollo
+
+Sigue estos pasos para configurar el entorno de desarrollo:
+
+1. Clona el repositorio desde GitHub:
+    `https://github.com/cvrlossj/gymflow.git`
+2. Ejecuta el servidor de desarrollo:
+   `python manage.py runserver`
+3. Abre tu navegador y accede a http://localhost:8000/ para ver la aplicación en funcionamiento.
+
+* admin -> 123
