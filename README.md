@@ -28,8 +28,6 @@ Sigue estos pasos para configurar el entorno de desarrollo:
 
 
 # pip install
-    ``` [language]
     qrcode
-     ```
 
 
