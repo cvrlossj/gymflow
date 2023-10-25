@@ -58,12 +58,14 @@ def agregarMaquina(request):
 
 
 def cargarAgregarMaquina(request):
-    return render(request, "agregarMaquina.html")
+    tipoUsuario = request.session.get('tipoUsuario', None)
+    return render(request, "agregarMaquina.html", {"tipoUsuario": tipoUsuario})
 
 
 def cargarEditarMaquina(request, id):
+    tipoUsuario = request.session.get('tipoUsuario', None)
     maquinas = Maquina.objects.get(id=id)
-    return render(request, "editarMaquina.html", {"maq": maquinas})
+    return render(request, "editarMaquina.html", {"maq": maquinas, "tipoUsuario": tipoUsuario})
 
 
 def editarMaquina(request):
@@ -100,14 +102,16 @@ def cargarPerfilGymEspacio(request):
 # Entrenadores
 
 def cargarEntrenadores(request):
+    tipoUsuario = request.session.get('tipoUsuario', None)
     entrenadores = Entrenador.objects.all()
-    return render(request, "listaEntrenadores.html", {"ent": entrenadores})
+    return render(request, "listaEntrenadores.html", {"ent": entrenadores, "tipoUsuario": tipoUsuario})
 
 
 # Agregar - Entrenador
 def cargarAgregarEntrenadores(request):
+    tipoUsuario = request.session.get('tipoUsuario', None)
     gimnasio = GymEspacio.objects.all()
-    return render(request, "agregarEntrenador.html", {"gim": gimnasio})
+    return render(request, "agregarEntrenador.html", {"gim": gimnasio, "tipoUsuario": tipoUsuario})
 
 
 def agregarEntrenador(request):
