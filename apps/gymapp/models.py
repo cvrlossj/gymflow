@@ -1,4 +1,5 @@
 from django.db import models
+
 # Create your models here.
 
 
@@ -15,7 +16,8 @@ class Maquina(models.Model):
     nombre = models.CharField(max_length=100)
     zona_muscular = models.CharField(max_length=50)
     descripcion = models.TextField()
-    enlace_tutorial = models.CharField(max_length=100)
+    enlace_tutorial = models.URLField() 
+    qr_code = models.ImageField(upload_to='qr_codes', null=True, blank=True)
 
     def __str__(self):
         txt = "Nombre: {0} - id: {1}"

@@ -20,5 +20,14 @@ urlpatterns = [
     path('agregarentrenador', views.cargarAgregarEntrenadores),
     path('agregarEntrenadorForm', views.agregarEntrenador),
     path('editarEntrenador/<id>', views.cargarEditarEntrenador),
-    path('eliminarEntrenador/<id>', views.eliminarEntrenador)
+    path('eliminarEntrenador/<id>', views.eliminarEntrenador),
+
+    # Inicar sesión GYMESPACIO
+    path('accederEspacio', views.cargarAccederEspacio),
+    path('accederUser', views.cargarAccederUser),
+    path('iniciarSesionForm',views.iniciarSesionGymEspacio),
+    path('iniciarSesionFormUser',views.iniciarSesionGymUser),
+
+    # Cerrar sesión
+    path('cerrar-sesion/',views.cerrarSesion, name='cerrarSesion')
 ]

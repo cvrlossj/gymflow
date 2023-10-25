@@ -11,81 +11,127 @@
 </header>
 
 <!-- ========================= LISTA DE MAQUINAS ========================= -->
+{% if tipoUsuario == 'gymespacio' %}
 <div class="container">
   <a href="/agregarmaquina" class="btn btn-success mt-4 mb-2"
     ><i class="bi bi-plus-circle-fill"></i> Agregar nueva maquina</a
   >
-  
+{% endif %}
 </div>
-
 <div class="container">
   <div class="row">
+
+    {% if tipoUsuario == 'gymuser' %}
     <div class="col-md-12 d-flex flex-column">
       <!-- Aquí puedes colocar otros elementos en tu página -->
-      
+
       <!-- Alinea el botón al centro verticalmente -->
       <div class="mt-auto">
-        <a href="#" class="btn btn-primary mt-4 mb-2" id="scanButton">
+        <a class="btn btn-primary mt-4 mb-2" id="scanButton">
           <i class="bi bi-camera"></i> Escanear una máquina con QR
         </a>
       </div>
     </div>
     <div class="col-md-8 d-flex flex-column">
       <div class="align-self-center" id="cameraContainer"></div>
-    </div>    
-</div>
-
-
-
-
-<div class="container mt-4 mb-4">
-  <div class="row">
-    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-      <div class="table-responsive">
-        <table class="table caption-top">
-          <caption>
-            Lista de Maquinas
-          </caption>
-          <thead>
-            <tr>
-              <th class="centered" scope="col">ID</th>
-              <th class="centered" scope="col">Nombre</th>
-              <th class="centered" scope="col">Zona Muscular</th>
-              <th class="centered" scope="col">Descripción</th>
-              <th class="centered" scope="col">Enlace Tutorial</th>
-              <th class="centered" scope="col">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for m in maq %}
-            <tr>
-              <th scope="row">{{m.id}}</th>
-              <td>{{m.nombre}}</td>
-              <td>{{m.zona_muscular}}</td>
-              <td>{{m.descripcion}}</td>
-              <td>
-                <a href="{{ m.enlace_tutorial }}" target="_blank"
-                  >{{ m.enlace_tutorial }}</a
-                >
-              </td>
-              <td>
-                <a href="/editarMaquina/{{m.id}}" class="btn btn-primary"
-                  ><i class="bi bi-pencil-square"></i> Editar</a
-                >
-                <a href="/eliminarMaquina/{{m.id}}" class="btn btn-danger"
-                  ><i class="bi bi-trash"></i> Eliminar</a
-                >
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
     </div>
   </div>
-</div>
+  {% endif %}
 
-{% endblock %} {% block script %}
-<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
-<script src="{% static 'js/ScanQR.js' %}"></script>
-{% endblock script %}
+  {% if tipoUsuario == 'gymespacio' %}
+  <div class="container mt-4 mb-4">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="table-responsive">
+          <table class="table caption-top">
+            <caption>
+              Lista de Maquinas
+            </caption>
+            <thead>
+              <tr>
+                <th class="centered" scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Zona Muscular</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Enlace Tutorial</th>
+                <th class="centered" scope="col">QR</th>
+                <th class="centered" scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for m in maq %}
+              <tr>
+                <th scope="row">{{m.id}}</th>
+                <td>{{m.nombre}}</td>
+                <td>{{m.zona_muscular}}</td>
+                <td>{{m.descripcion}}</td>
+                <td>
+                  <a href="{{ m.enlace_tutorial }}" target="_blank"
+                    >{{ m.enlace_tutorial }}</a
+                  >
+                </td>
+                <td><img src="{{m.qr_code.url}}" height="100" /></td>
+                <td>
+                  <!-- Accede al campo qr_code para mostrar el código QR -->
+                  <img src="{% static m.qr_code.url %}" height="150" alt="Código QR" />
+                </td>
+                <td>
+                  <!-- Botón de descarga -->
+                  <a href="{% static m.qr_code.url %}" download="codigo_qr.png" class="btn btn-success" title="Descargar el código QR">
+                    <i class="bi bi-download"></i> 
+                  </a>
+                
+                  <!-- Botón de editar -->
+                  <a href="/editarMaquina/{{ m.id }}" class="btn btn-primary" title="Editar maquina">
+                    <i class="bi bi-pencil-square"></i> 
+                  </a>
+                
+                  <!-- Botón de eliminar -->
+                  <a href="/eliminarMaquina/{{ m.id }}" class="btn btn-danger" title="Eliminar maquina">
+                    <i class="bi bi-trash"></i> 
+                  </a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {% endif %}
+
+
+      {% comment %} LISTA DE MAQUINAS PERO PARA EL GYMUSER {% endcomment %}
+      {% if tipoUsuario == 'gymuser' %}
+      <section class="mt-4 mb-4">
+        <div class="container">
+            <h2 class="mb-5">Máquinas y sus tutoriales</h2>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 justify-content-center">
+                {% for m in maq %}
+                    <div class="col mb-4">
+                        <div class="card" style="width: 18rem;">
+                            <img src="static/img/pesas.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">{{m.nombre}}</h5>
+                                <p class="card-text">{{m.descripcion}}</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Zona muscular:</strong> {{m.zona_muscular}}</li>
+                            </ul>
+                            <div class="card-body">
+                                <a href="{{m.enlace_tutorial}}" target="_blank" class="card-link">Video tutorial</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+      {% endif %}
+    </div>
+  </div>
+
+  {% endblock %} {% block script %}
+  <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+  <script src="{% static 'js/ScanQR.js' %}"></script>
+  {% endblock script %}
+</div>
