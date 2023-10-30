@@ -66,8 +66,9 @@ def cargarAgregarMaquina(request):
 
 
 def cargarEditarMaquina(request, id):
+    tipoUsuario = request.session.get('tipoUsuario', None)
     maquinas = Maquina.objects.get(id=id)
-    return render(request, "editarMaquina.html", {"maq": maquinas})
+    return render(request, "editarMaquina.html", {"maq": maquinas, "tipoUsuario": tipoUsuario})
 
 
 def editarMaquina(request):
