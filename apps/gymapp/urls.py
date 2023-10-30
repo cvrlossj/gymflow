@@ -3,6 +3,9 @@ from . import views
 
 urlpatterns = [
     path('', views.cargarInicio),
+
+    # GymEspacio
+    path('dashboard', views.cargarDashboard),
     # Maquina
     path('maquinas', views.cargarListaMaquinas),
     path('agregarmaquina', views.cargarAgregarMaquina),
@@ -22,11 +25,9 @@ urlpatterns = [
     path('editarEntrenador/<id>', views.cargarEditarEntrenador),
     path('eliminarEntrenador/<id>', views.eliminarEntrenador),
 
-    # Inicar sesión GYMESPACIO
-    path('accederEspacio', views.cargarAccederEspacio),
+    # Inicar sesión 
     path('accederUser', views.cargarAccederUser),
-    path('iniciarSesionForm',views.iniciarSesionGymEspacio),
-    path('iniciarSesionFormUser',views.iniciarSesionGymUser),
+    path('iniciarSesionFormUser',views.iniciarSesion),
 
     # Cerrar sesión
     path('cerrar-sesion/',views.cerrarSesion, name='cerrarSesion')
