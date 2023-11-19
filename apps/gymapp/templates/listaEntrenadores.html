@@ -3,26 +3,24 @@
 
 {% block head %}
 <title>Lista de Entrenadores</title>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 {% endblock head %}
 
 
 {% block body %}
-<!-- ========================= SECTION PAGETOP ========================= -->
-<header class="bg-warning py-5">
-    <div class="container px-4 px-lg-5 my-5">
-      <div class="text-center text-white">
-        <h1 class="display-4 fw-bolder">Lista de entrenadores</h1>
-      </div>
-    </div>
-  </header>
+
 
 <!-- ========================= LISTA DE ENTRENADORES ========================= -->
 <div class="container">
-    <a href="/agregarentrenador" class="btn btn-success mt-4 mb-2"
-      ><i class="bi bi-person-add"></i> Agregar un nuevo entrenador</a
-    >
+    <a
+    href="#modalAgregarEntrenador"
+    class="btn btn-light btn-sm mt-4 mb-2"
+    id="btnCreate"
+    data-bs-toggle="modal"
+    ><i class="bi bi-person-fill-add"></i> Agregar un entrenador</a>
     <hr class="my-4" />
   </div>
+  
   
 
 {% comment %} 
@@ -69,7 +67,7 @@
   <!-- ========================= LISTA DE ENTRENADORES ========================= -->
 <section class="">
   <div class="container mt-4 mb-4">
-      <h2 class="mb-5">Entrenadores</h2>
+      <h2 class="mb-5">Entrenadores ({{tot}})</h2>
       <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
       {% for e in ent %}  
@@ -84,7 +82,7 @@
                               <!-- Nombre entrenador-->
                               <h5 class="fw-bolder">{{e.nombre}} {{e.apellido}}</h5>
                               <!-- Servicios entrenador-->
-                              <span class="text-muted">{{e.servicios}}</span>
+                              <span class="text-muted">Servicios: {{e.servicios}}</span>
                           </div>
                       </div>
                       <!-- acciones entrenador-->

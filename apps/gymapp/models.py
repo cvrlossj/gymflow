@@ -10,6 +10,7 @@ class TipoUsuario(models.Model):
         return txt.format(self.nombre_tipo, self.id_tipo)
 
 
+
 class Maquina(models.Model):
     nombre = models.CharField(max_length=100)
     zona_muscular = models.CharField(max_length=50)
@@ -26,7 +27,7 @@ class UsuarioPadre(models.Model):
     id_tipo = models.ForeignKey(TipoUsuario, on_delete=models.CASCADE)
 
 
-class GymEspacio(UsuarioPadre):
+class GymEspacio(UsuarioPadre): 
     direccion = models.TextField()
     telefono = models.CharField(max_length=20)
     maquinas = models.ManyToManyField(Maquina)

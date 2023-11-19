@@ -15,11 +15,6 @@ def cargarInicio(request):
     return render(request, "loginUser.html", {"tipoUsuario": tipoUsuario})
 
 
-# Dashboard
-def cargarDashboard(request):
-    tipoUsuario = request.session.get('tipoUsuario', None)
-    return render(request, "dashboard.html", {"tipoUsuario": tipoUsuario})
-
 
 # Maquinas
 def cargarListaMaquinas(request):
@@ -59,10 +54,6 @@ def agregarMaquina(request):
 
     return redirect('/maquinas')
 
-
-def cargarAgregarMaquina(request):
-    tipoUsuario = request.session.get('tipoUsuario', None)
-    return render(request, "agregarMaquina.html", {"tipoUsuario": tipoUsuario})
 
 
 def cargarEditarMaquina(request, id):
@@ -107,7 +98,8 @@ def cargarPerfilGymEspacio(request):
 def cargarEntrenadores(request):
     tipoUsuario = request.session.get('tipoUsuario', None)
     entrenadores = Entrenador.objects.all()
-    return render(request, "listaEntrenadores.html", {"ent": entrenadores, "tipoUsuario": tipoUsuario})
+    entrenadores_cont = Entrenador.objects.count()
+    return render(request, "listaEntrenadores.html", {"ent": entrenadores, "tipoUsuario": tipoUsuario, "tot": entrenadores_cont})
 
 
 # Agregar - Entrenador
@@ -128,7 +120,7 @@ def agregarEntrenador(request):
 
     gimnasio = GymEspacio.objects.get(id=e_gimnasio_id)
 
-    Entrenador.objects.create(nombre=e_nombre, apellido=e_apellido, id_gymespacio=gimnasio,
+    nuevo_entrenador = Entrenador.objects.create(nombre=e_nombre, apellido=e_apellido, id_gymespacio=gimnasio,
                               servicios=e_servicios, correo=e_correo, contrasenia=e_contrasenia)
 
     return redirect('/entrenadores')
