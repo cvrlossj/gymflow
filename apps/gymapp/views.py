@@ -12,8 +12,11 @@ from io import BytesIO
 # Inicio de la página - Iniciar Sesión
 def cargarInicio(request):
     tipoUsuario = request.session.get('tipoUsuario', None)
-    return render(request, "loginUser.html", {"tipoUsuario": tipoUsuario})
+    return render(request, "inicio.html", {"tipoUsuario": tipoUsuario})
 
+def cargarLogin(request):
+    tipoUsuario = request.session.get('tipoUsuario', None)
+    return render(request, "loginUser.html", {"tipoUsuario": tipoUsuario})
 
 
 # Maquinas

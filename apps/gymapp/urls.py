@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.cargarInicio),
+    path('login', views.cargarLogin),
 
     # Maquina
     path('maquinas', views.cargarListaMaquinas),
