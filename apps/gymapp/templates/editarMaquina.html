@@ -11,90 +11,103 @@
 </header>
 
 <div class="container mt-5">
-  <h1>Editar la maquina</h1>
-  <span class="rd-point">* Campos Obligatorios</span>
-</div>
-
-<form action="/editarMaquinaForm" method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-  <div class="container mt-5 mb-5">
-    <div class="row">
-      <div class="col-md-1">
-        <div class="form-group mb-3">
-          <label for="txtMaquina">ID<small> *</small></label>
-          <input
-            readonly
-            value="{{maq.id}}"
-            name="txtId"
-            id="txtId"
-            type="text"
-            class="form-control"
-            placeholder="ID"
-          />
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <div class="card">
+        <h5 class="card-header">Campos obligatorios *</h5>
+        <div class="card-body">
+          <form action="/editarMaquinaForm" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="container mt-5 mb-5">
+              <div class="row">
+                <div class="col-md-1">
+                  <div class="form-group mb-3">
+                    <label class="fw-bold" for="txtMaquina" >ID<small class="fw-bold"> *</small></label>
+                    <input
+                      readonly
+                      value="{{maq.id}}"
+                      name="txtId"
+                      id="txtId"
+                      type="text"
+                      class="form-control"
+                      placeholder="ID"
+                    />
+                  </div>
+                </div>
+          
+                <div class="col-md-3">
+                  <div class="form-group mb-3">
+                    <label class="fw-bold" for="txtMaquina">Nombre de la maquina<small class="fw-bold"> *</small></label>
+                    <input
+                      value="{{maq.nombre}}"
+                      name="txtMaquina"
+                      id="txtMaquina"
+                      type="text"
+                      class="form-control"
+                      placeholder="Ingrese el nombre de la maquina"
+                    />
+                  </div>
+                </div>
+          
+                <div class="col-md-8">
+                  <div class="form-group mb-3">
+                    <label class="fw-bold" for="txtZona">Zona muscular<small class="fw-bold"> *</small></label>
+                    <input
+                      value="{{maq.zona_muscular}}"
+                      name="txtZona"
+                      id="txtZona"
+                      type="text"
+                      class="form-control"
+                      placeholder="Ejemplo: Piernas, Pecho, Tricep, etc"
+                    />
+                  </div>
+                </div>
+          
+                <div class="col-md-9">
+                  <div class="form-group mb-3">
+                    <label class="fw-bold" for="txtDesc">Descripción<small class="fw-bold"> *</small></label>
+                    <input
+                      value="{{maq.descripcion}}"
+                      name="txtDesc"
+                      id="txtDesc"
+                      type="text"
+                      class="form-control"
+                      placeholder="Ingrese una descripción para la maquina"
+                    />
+                  </div>
+                </div>
+          
+                <div class="col-md-3">
+                  <div class="form-group mb-3">
+                    <label class="fw-bold" for="txtEnlace">Nuevo Enlace<small class="fw-bold"> *</small></label>
+                    <input
+                      name="txtEnlace"
+                      id="txtEnlace"
+                      type="text"
+                      class="form-control"
+                      placeholder="Insertar enlace del tutorial"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group mb-3">
+                      <label class="fw-bold" for="txtImagen">Imagen <small class="fw-bold">*</small></label>
+                      <img src="{{maq.imagen.url}}" height="100" alt="">
+                      <input name="txtImagen" id="txtImagen" type="file" class="form-control" accept=".jpg, .png">
+                  </div> 
+              </div>
+          
+                <hr class="my-4" />
+                <div class="form-group mt-2">
+                  <button type="submit" class="btn btn-success"><i class="bi bi-pencil-square"></i> Editar maquina</button>
+                </div>
+              </div>
+          </form>
         </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="form-group mb-3">
-          <label for="txtMaquina">Nombre de la maquina<small> *</small></label>
-          <input
-            value="{{maq.nombre}}"
-            name="txtMaquina"
-            id="txtMaquina"
-            type="text"
-            class="form-control"
-            placeholder="Ingrese el nombre de la maquina"
-          />
-        </div>
-      </div>
-
-      <div class="col-md-8">
-        <div class="form-group mb-3">
-          <label for="txtZona">Zona muscular<small> *</small></label>
-          <input
-            value="{{maq.zona_muscular}}"
-            name="txtZona"
-            id="txtZona"
-            type="text"
-            class="form-control"
-            placeholder="Ejemplo: Piernas, Pecho, Tricep, etc"
-          />
-        </div>
-      </div>
-
-      <div class="col-md-9">
-        <div class="form-group mb-3">
-          <label for="txtDesc">Descripción<small> *</small></label>
-          <input
-            value="{{maq.descripcion}}"
-            name="txtDesc"
-            id="txtDesc"
-            type="text"
-            class="form-control"
-            placeholder="Ingrese una descripción para la maquina"
-          />
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="form-group mb-3">
-          <label for="txtEnlace">Enlace tutorial<small> *</small></label>
-          <input
-            value="{{maq.enlace_tutorial}}"
-            name="txtEnlace"
-            id="txtEnlace"
-            type="text"
-            class="form-control"
-            placeholder="Insertar enlace del tutorial"
-          />
-        </div>
-      </div>
-      <hr class="my-4" />
-      <div class="form-group mt-2">
-        <button type="submit" class="btn btn-success"><i class="bi bi-pencil-square"></i> Editar maquina</button>
       </div>
     </div>
   </div>
-</form>
+</div>
+
 
 {% endblock %}

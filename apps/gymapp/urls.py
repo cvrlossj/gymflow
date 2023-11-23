@@ -7,6 +7,8 @@ urlpatterns = [
 
     # Maquina
     path('maquinas', views.cargarListaMaquinas),
+    # Listar 
+    path('list_maquinas/',views.list_maquinas),
     path('agregarMaquinaForm', views.agregarMaquina),
     path('editarMaquina/<id>', views.cargarEditarMaquina),
     path('editarMaquinaForm', views.editarMaquina),
@@ -18,9 +20,9 @@ urlpatterns = [
 
     # Entrenador
     path('entrenadores', views.cargarEntrenadores),
-    path('agregarentrenador', views.cargarAgregarEntrenadores),
     path('agregarEntrenadorForm', views.agregarEntrenador),
     path('editarEntrenador/<id>', views.cargarEditarEntrenador),
+    path('editarEntrenadorForm', views.editarEntrenador),
     path('eliminarEntrenador/<id>', views.eliminarEntrenador),
 
     # Inicar sesión 
@@ -28,5 +30,10 @@ urlpatterns = [
     path('iniciarSesionFormUser',views.iniciarSesion),
 
     # Cerrar sesión
-    path('cerrar-sesion/',views.cerrarSesion, name='cerrarSesion')
+    path('cerrar-sesion/',views.cerrarSesion, name='cerrarSesion'),
+
+
+    # GymUser
+    path('maquina/<id>', views.cargarDetalleMaquina)
+    
 ]

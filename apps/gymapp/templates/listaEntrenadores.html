@@ -10,97 +10,217 @@
 {% block body %}
 
 
+<!-- ========================= MODAL PARA AGREGAR ENTRENADORES ========================= -->
+<div class="modal fade" id="agregarEntrenadores" tabindex="-1" aria-labelledby="modalAgregarMaquinaLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="modalAgregarMaquinaLabel">
+          <i class="bi bi-people-fill"></i> Agregar un entrenador
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+
+        <form id="agregarEntrenadorForm" action="/agregarEntrenadorForm" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="container mt-5 mb-5">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group mb-3">
+                  <label for="txtEntrenador">Nombre<small> *</small></label>
+                  <input
+                    name="txtEntrenador"
+                    id="txtEntrenador"
+                    type="text"
+                    class="form-control"
+                    placeholder="John"
+                    required
+                  />
+                </div>
+              </div>
+        
+              <div class="col-md-4">
+                <div class="form-group mb-3">
+                  <label for="txtApellido">Apellido<small> *</small></label>
+                  <input
+                    name="txtApellido"
+                    id="txtApellido"
+                    type="text"
+                    class="form-control"
+                    placeholder="Doe"
+                    required
+                  />
+                </div>
+              </div>
+        
+        
+              <div class="col-md-4">
+                <div class="form-group mb-3">
+                  <label for="cmbGim">Gimnasio<small> *</small></label>
+                  <select name="cmbGim" id="cmbGim" class="form-select"> 
+                    <option disabled selected>Seleccione</option>
+                    {% for g in gim %}
+                    <option value="{{g.id}}">{{g.nombre}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+        
+              <div class="col-md-12">
+                <div class="form-group mb-3">
+                  <label for="txtServicio">Servicios<small> *</small></label>
+                  <input
+                    name="txtServicio"
+                    id="txtServicio"
+                    type="text"
+                    class="form-control"
+                    placeholder="Servicios del entrenador"
+                    required
+                  />
+                </div>
+              </div>
+        
+              <div class="col-md-3">
+                <div class="form-group mb-3">
+                  <label for="txtCorreo">Correo<small> *</small></label>
+                  <input
+                    name="txtCorreo"
+                    id="txtCorreo"
+                    type="text"
+                    class="form-control"
+                    placeholder="johndoe@gmail.com"
+                    required
+                  />
+                </div>
+              </div>
+        
+              <div class="col-md-3">
+                <div class="form-group mb-3">
+                  <label for="txtPassword">Contraseña<small> *</small></label>
+                  <input
+                    name="txtPassword"
+                    id="txtPassword"
+                    type="password"
+                    class="form-control"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group mb-3">
+                  <label for="txtPrecio">Precio Mensual<small> *</small></label>
+                  <input
+                    name="txtPrecio"
+                    id="txtPrecio"
+                    type="number"
+                    min="0"
+                    class="form-control"
+                    placeholder="$"
+                    required
+                  />
+                </div>
+              </div>
+        
+              <div class="col-md-3" hidden>
+                <div class="form-group mb-3">
+                  <label for="txtUsuario">Tipo usuario<small> *</small></label>
+                  <input
+                    value="2"
+                    name="txtUsuario"
+                    id="txtUsuario"
+                    type="text"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group mb-6">
+                  <label for="txtImagen">Foto Perfil <small>*</small></label>
+                  <input name="txtImagen" id="txtImagen" type="file" class="form-control" accept=".jpg,.png" />
+                </div>
+              </div>
+            </div>
+            
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Enviar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ========================= LISTA DE ENTRENADORES ========================= -->
 <div class="container">
     <a
-    href="#modalAgregarEntrenador"
+    href="#agregarEntrenadores"
     class="btn btn-light btn-sm mt-4 mb-2"
     id="btnCreate"
     data-bs-toggle="modal"
     ><i class="bi bi-person-fill-add"></i> Agregar un entrenador</a>
     <hr class="my-4" />
   </div>
-  
-  
-
-{% comment %} 
-  <div class="container mt-4 mb-4">
-    <div class="row">
-      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <div class="table-responsive">
-          <table class="table caption-top">
-            <caption>
-              Listado de Entrenadores
-            </caption>
-            <thead>
-              <tr>
-                <th class="centered" scope="col">ID</th>
-                <th class="centered" scope="col">Nombre</th>
-                <th class="centered" scope="col">Apellido</th>
-                <th class="centered" scope="col">Servicios</th>
-                <th class="centered" scope="col">Correo</th>
-                <th class="centered" scope="col">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for e in ent %}
-              <tr>
-                <th scope="row">{{e.id}}</th>
-                <td>{{e.nombre}}</td>
-                <td>{{e.apellido}}</td>
-                <td>{{e.servicios}}</td>
-                <td>{{e.correo}}</td>
-                </td>
-                <td>
-                  <a href="/editarMaquina/{{m.id}}" class="btn btn-primary"><i class="bi bi-pencil-square"></i> Editar</a>
-                  <a href="/eliminarMaquina/{{m.id}}" class="btn btn-danger"><i class="bi bi-trash"></i> Eliminar</a>
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div> {% endcomment %}
-
-  <!-- ========================= LISTA DE ENTRENADORES ========================= -->
+<!-- ========================= LISTA DE ENTRENADORES ========================= -->
 <section class="">
   <div class="container mt-4 mb-4">
-      <h2 class="mb-5">Entrenadores ({{tot}})</h2>
-      <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-
+    <span class="badge bg-success fs-3 p-3">Entrenadores: ({{tot}})</span>
+    <br>
+    <br>
+    <br>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
       {% for e in ent %}  
-          <div class="col mb-5">
-                  <div class="card h-100">
-                      <div class="badge bg-primary text-white position-absolute" style="top: 0.5rem; right: 0.5rem">{{e.id}}</div>
-                      <!-- Imagen de Entrenadores (general)-->
-                      <img class="card-img-top" src="static/img/entrenador.jpg" alt="..." />
-                      <!-- Detalles entrenador-->
-                      <div class="card-body p-4">
-                          <div class="text-center">
-                              <!-- Nombre entrenador-->
-                              <h5 class="fw-bolder">{{e.nombre}} {{e.apellido}}</h5>
-                              <!-- Servicios entrenador-->
-                              <span class="text-muted">Servicios: {{e.servicios}}</span>
-                          </div>
-                      </div>
-                      <!-- acciones entrenador-->
-                      <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                          <div class="text-center">
-                                  <a href="/editarEntrenador/{{e.id}}" class="btn btn-primary"><i class="bi bi-pencil-square"></i> Editar</a>
-                                  <a href="/eliminarEntrenador/{{e.id}}" class="btn btn-danger"><i class="bi bi-trash"></i> Eliminar</a>
-                              
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          {% endfor %}
+      <div class="col mb-3">
+        <div class="card h-100 border-success"> <!-- Agregar clase border-success para el borde estilo success -->
+          <div class="badge bg-primary text-white position-absolute" style="top: 0.5rem; right: 0.5rem">{{e.id}}</div>
+          <!-- Imagen de Entrenadores (general)-->
+          <img class="card-img-top" src="{{e.foto_perfil.url}}" alt="..." style="max-height: 500px; object-fit: cover;" />
+          <!-- Detalles entrenador-->
+          <div class="card-body p-3">
+            <div class="text-center">
+              <!-- Nombre entrenador-->
+              <h5 class="fw-bolder fs-5">{{e.nombre}} {{e.apellido}}</h5>
+              <!-- Servicios entrenador-->
+              <p class="text-muted mb-1">Servicios: {{e.servicios}}</p>
+              <p class="text-muted mb-1">Precio: {{e.precio}}</p>
+            </div>
+          </div>
+          <!-- acciones entrenador-->
+          <div class="card-footer p-3 pt-0 border-top-0 bg-transparent">
+            <div class="text-center">
+              <a href="/editarEntrenador/{{e.id}}" class="btn btn-primary btn-sm me-2"><i class="bi bi-pencil-square"></i> Editar</a>
+              <a href="/eliminarEntrenador/{{e.id}}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Eliminar</a>                    
+            </div>
+          </div>
+        </div>
       </div>
+      {% endfor %}
+    </div>
   </div>
 </section>
 
+
 {% endblock body %}
+
+{% block script %}
+<script>
+  $(document).ready(function () {
+    $("#btnCreate").click(function () {
+      $("#agregarEntrenadores").modal("show");
+    });
+
+    // ZONA MUSCULAR
+  });
+</script>
+{% endblock script%}
 
 
 

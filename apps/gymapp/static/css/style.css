@@ -14,8 +14,11 @@ nav ul li:hover {
     background-color: #198754; /* Cambia el color de fondo a rojo cuando se pasa el mouse por encima */
     color: #ffffff; /* Cambia el color del texto a blanco cuando se pasa el mouse por encima */
   }
-  
+
+
 
 #btnCreate{
     border: 2px solid #efefef;
 }
+
+/* Estilos del cuadrado de la cámara */

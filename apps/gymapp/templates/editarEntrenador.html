@@ -12,122 +12,162 @@
   </div>
 </header>
 
-<form action="/editarEntrenadorForm" method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-  <div class="container mt-5 mb-5">
-    <div class="row">
-
-      <div class="row">
-        <div class="col-md-1">
-          <div class="form-group mb-3">
-            <label for="txtMaquina">ID<small> *</small></label>
-            <input
-              readonly
-              value="{{ent.id}}"
-              name="txtId"
-              id="txtId"
-              type="text"
-              class="form-control"
-              placeholder="ID"
-            />
-          </div>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <div class="card">
+        <h5 class="card-header">Campos obligatorios *</h5>
+        <div class="card-body">
+          <form action="/editarEntrenadorForm" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="container mt-5 mb-5">
+              <div class="row">
+          
+                <div class="row">
+                  <div class="col-md-1">
+                    <div class="form-group mb-3">
+                      <label class="fw-bold" for="txtMaquina">ID<small class="fw-bold text-danger"> *</small></label>
+                      <input
+                        readonly
+                        value="{{ent.id}}"
+                        name="txtId"
+                        id="txtId"
+                        type="text"
+                        class="form-control"
+                        placeholder="ID"
+                      />
+                    </div>
+                  </div>
+          
+          
+                <div class="col-md-3">
+                  <div class="form-group mb-3">
+                    <label class="fw-bold" for="txtEntrenador">Nombre del entrenador<small class="fw-bold text-danger"> *</small></label>
+                    <input
+                      value="{{ent.nombre}}"
+                      name="txtEntrenador"
+                      id="txtEntrenador"
+                      type="text"
+                      class="form-control"
+                      placeholder="John"
+                    />
+                  </div>
+                </div>
+          
+                <div class="col-md-3">
+                  <div class="form-group mb-3">
+                    <label class="fw-bold" for="txtApellido">Apellido<small class="fw-bold text-danger"> *</small></label>
+                    <input
+                     value="{{ent.apellido}}"
+                      name="txtApellido"
+                      id="txtApellido"
+                      type="text"
+                      class="form-control"
+                      placeholder="Doe"
+                    />
+                  </div>
+                </div>
+          
+          
+                <div class="col-md-3">
+                  <div class="form-group mb-3">
+                    <label class="fw-bold" for="cmbGim">Gimnasio<small class="fw-bold text-danger"> *</small></label>
+                    <select name="cmbGim" id="cmbGim" class="form-select"> 
+                      <option disabled selected>Seleccione</option>
+                      {% for g in gim %}
+                        <option value="{{g.id}}" {% if g.id == ent.id_gymespacio.id %} selected {% endif %}>{{g.nombre}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="col-md-12">
+                  <div class="form-group mb-3">
+                    <label class="fw-bold" for="txtServicio">Servicios<small class="fw-bold text-danger" > *</small></label>
+                    <input
+                      value="{{ent.servicios}}"
+                      name="txtServicio"
+                      id="txtServicio"
+                      type="text"
+                      class="form-control"
+                      placeholder="Servicios del entrenador"
+                    />
+                  </div>
+                </div>
+          
+                <div class="col-md-3">
+                  <div class="form-group mb-3">
+                    <label class="fw-bold" for="txtCorreo">Correo<small class="fw-bold text-danger"> *</small></label>
+                    <input
+                      value="{{ent.correo}}"
+                      name="txtCorreo"
+                      id="txtCorreo"
+                      type="text"
+                      class="form-control"
+                      placeholder="johndoe@gmail.com"
+                    />
+                  </div>
+                </div>
+          
+                <div class="col-md-3">
+                  <div class="form-group mb-3">
+                    <label class="fw-bold" for="txtPassword">Contraseña<small class="fw-bold text-danger"> *</small></label>
+                    <input
+                      value="{{ent.contrasenia}}"
+                      name="txtPassword"
+                      id="txtPassword"
+                      type="password"
+                      class="form-control"
+                    />
+                  </div>
+                </div>
+          
+                <div class="col-md-3">
+                  <div class="form-group mb-3">
+                    <label class="fw-bold" for="txtPrecio">Precio<small class="fw-bold text-danger"> *</small></labelfor=>
+                    <input
+                      value="{{ent.precio}}"
+                      name="txtPrecio"
+                      id="txtPrecio"
+                      type="number"
+                      min="0"
+                      class="form-control"
+                      placeholder="$"
+                    />
+                  </div>
+                </div>
+          
+                <div class="col-md-3">
+                  <div class="form-group mb-12">
+                      <label class="fw-bold " for="txtImagen">Foto Perfil <small class="fw-bold text-danger">*</small></label>
+                      <img src="{{ent.foto_perfil.url}}" height="100" alt="">
+                      <input name="txtImagen" id="txtImagen" type="file" class="form-control" accept=".jpg, .png">
+                  </div> 
+                </div>
+                
+          
+                <div id="alerta" class="alert alert-danger" style="display: none"></div>
+          
+                <hr class="my-4" />
+                <div class="form-group mt-2 mb-2">
+                  <button id="btnEnviar" type="submit" class="btn btn-success">
+                    <i class="bi bi-pencil-square"></i> Editar entrenador
+                  </button>
+                </div>
+              </div>
+          
+          
+          
+            </div>
+          </form>
+          </form>
         </div>
-
-
-      <div class="col-md-4">
-        <div class="form-group mb-3">
-          <label for="txtEntrenador">Nombre del entrenador<small> *</small></label>
-          <input
-            value="{{ent.nombre}}"
-            name="txtEntrenador"
-            id="txtEntrenador"
-            type="text"
-            class="form-control"
-            placeholder="John"
-          />
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="form-group mb-3">
-          <label for="txtApellido">Apellido<small> *</small></label>
-          <input
-           value="{{ent.apellido}}"
-            name="txtApellido"
-            id="txtApellido"
-            type="text"
-            class="form-control"
-            placeholder="Doe"
-          />
-        </div>
-      </div>
-
-
-      <div class="col-md-4">
-        <div class="form-group mb-3">
-          <label for="cmbGim">Gimnasio<small> *</small></label>
-          <select name="cmbGim" id="cmbGim" class="form-select"> 
-            <option disabled selected>Seleccione</option>
-            {% for g in gim %}
-              <option value="{{g.id}}" {% if g.id == ent.id_gymespacio.id %} selected {% endif %}>{{g.nombre}}</option>
-            {% endfor %}
-          </select>
-        </div>
-      </div>
-      
-      <div class="col-md-12">
-        <div class="form-group mb-3">
-          <label for="txtServicio">Servicios<small> *</small></label>
-          <input
-            value="{{ent.servicios}}"
-            name="txtServicio"
-            id="txtServicio"
-            type="text"
-            class="form-control"
-            placeholder="Servicios del entrenador"
-          />
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="form-group mb-3">
-          <label for="txtCorreo">Correo<small> *</small></label>
-          <input
-            value="{{ent.correo}}"
-            name="txtCorreo"
-            id="txtCorreo"
-            type="text"
-            class="form-control"
-            placeholder="johndoe@gmail.com"
-          />
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="form-group mb-3">
-          <label for="txtPassword">Contraseña<small> *</small></label>
-          <input
-            value="{{ent.contrasenia}}"
-            name="txtPassword"
-            id="txtPassword"
-            type="password"
-            class="form-control"
-          />
-        </div>
-      </div>
-      
-
-      <div id="alerta" class="alert alert-danger" style="display: none"></div>
-
-      <hr class="my-4" />
-      <div class="form-group mt-2 mb-2">
-        <button id="btnEnviar" type="submit" class="btn btn-success">
-          <i class="bi bi-pencil-square"></i> Editar entrenador
-        </button>
       </div>
     </div>
-
   </div>
-</form>
+</div>
+
+
+
 
 {% endblock %}

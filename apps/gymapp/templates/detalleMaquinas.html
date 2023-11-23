@@ -1,0 +1,47 @@
+{% extends "baseGymEspacio.html" %}
+{% load static %}
+
+{% block head %}
+<title>Detalle maquina</title>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.min.css"
+/>
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+{% endblock head %}
+
+
+
+{% block body %}
+<!-- Header-->
+<header class="bg-success py-5">
+    <div class="container px-4 px-lg-5 my-5">
+      <div class="text-center text-white">
+        <h1 class="display-4 fw-bolder">{{maq.nombre}}</h1>
+      </div>
+    </div>
+  </header>
+<!-- ========================= DETALLE DE LA MÁQUINA ========================= -->
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Ver tutorial</h3>
+                    <iframe width="820" height="500" src="https://www.youtube.com/embed/{{ maq.enlace_tutorial }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            
+                    <h3 class="card-title">Detalles de la Máquina</h3>
+                    <p class="card-text"><b>Nombre:</b> {{maq.nombre}}</p>
+                    <p class="card-text"><b>Descripción:</b> <em>{{maq.descripcion}}</em></p>
+                    <p class="card-text"><b>Código:</b> {{maq.id}}</em></p>
+                    <span class="badge bg-success fs-6 p-2">{{maq.zona_muscular}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

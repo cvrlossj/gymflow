@@ -1,113 +1,97 @@
 {% extends "baseGymEspacio.html" %} {% load static %} {% block head %}
 <title>Lista de Maquinas</title>
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.min.css"
-/>
 
 <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+<!-- DataTable.js -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+<style>
+  .camera-square {
+    height: 300px; /* Ajusta la altura según tu preferencia */
+    width: 300px;
+    background-color: #f0f0f0; /* Cambia el color de fondo */
+    border: 3px solid #333; /* Borde más delgado y color gris */
+  }
+</style>
 {% endblock %} {% block body %}
 
+
+{% if tipoUsuario == 'gymuser' %}
+<!-- Header-->
+<header class="bg-success py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">🏋️‍♀️ Lista de Maquinas 🏋️‍♀️</h1>
+      <div class="col-md-12 d-flex flex-column">
+        <div class="mt-auto">
+          <a href="#modalQR" class="btn btn-warning mt-4 mb-2" id="btnEscanear">
+            <i class="bi bi-camera"></i> Escanear una máquina
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+{% endif %}
 <!-- ========================= LISTA DE MAQUINAS ========================= -->
 {% if tipoUsuario == 'gymespacio' %}
 <div class="container">
-  <a
-    href="#modalAgregarMaquina"
-    class="btn btn-light btn-sm mt-4 mb-2"
-    id="btnCreate"
-    data-bs-toggle="modal"
-    ><i class="bi bi-plus-circle-fill"></i> Crear nueva maquina</a
-  >
+  <a href="#modalAgregarMaquina" class="btn btn-light btn-sm mt-4 mb-2" id="btnCreate" data-bs-toggle="modal"><i
+      class="bi bi-plus-circle-fill"></i> Crear nueva maquina</a>
 
   {% endif %}
 </div>
 
-<!-- MODAL AGREGAR UNA MAQUINA -->
-<div
-  class="modal fade"
-  id="modalAgregarMaquina"
-  tabindex="-1"
-  aria-labelledby="modalAgregarMaquinaLabel"
-  aria-hidden="true"
->
+<!-- ========================= MODAL DE AGREGAR UNA NUEVA MAQUINA ========================= -->
+<div class="modal fade" id="modalAgregarMaquina" tabindex="-1" aria-labelledby="modalAgregarMaquinaLabel"
+  aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-success text-white">
         <h5 class="modal-title" id="modalAgregarMaquinaLabel">
           <i class="bi bi-justify"></i> Crear nueva máquina
         </h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form
-          id="agregarMaquinaForm"
-          action="/agregarMaquinaForm"
-          method="POST"
-          enctype="multipart/form-data"
-        >
+        <form id="agregarMaquinaForm" action="/agregarMaquinaForm" method="POST" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="container mt-5 mb-5">
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group mb-3">
-                  <label for="txtMaquina"
-                    >Nombre de la máquina<small> *</small></label
-                  >
-                  <input
-                    name="txtMaquina"
-                    id="txtMaquina"
-                    type="text"
-                    class="form-control"
-                    placeholder="Agregar el nombre"
-                    required
-                  />
+                  <label for="txtMaquina">Nombre de la máquina<small> *</small></label>
+                  <input name="txtMaquina" id="txtMaquina" type="text" class="form-control"
+                    placeholder="Agregar el nombre" required />
                 </div>
               </div>
               <div class="col-md-12">
                 <div class="form-group mb-3">
                   <label for="txtZona">Zona muscular<small> *</small></label>
-                  <input
-                    name="txtZona"
-                    id="txtZona"
-                    type="text"
-                    class="form-control"
-                    placeholder="Ejemplo: Piernas, Pecho, Tricep, etc"
-                    required
-                  />
+                  <input name="txtZona" id="txtZona" type="text" class="form-control"
+                    placeholder="Ejemplo: Piernas, Pecho, Tricep, etc" required />
                 </div>
               </div>
               <div class="col-md-12">
                 <div class="form-group mb-3">
-                  <label for="txtDesc" class="form-label"
-                    >Descripción<small> *</small></label
-                  >
-                  <textarea
-                    class="form-control"
-                    rows="3"
-                    name="txtDesc"
-                    id="txtDesc"
-                    placeholder="Ingrese una descripción para la máquina"
-                    required
-                  ></textarea>
+                  <label for="txtDesc" class="form-label">Descripción<small> *</small></label>
+                  <textarea class="form-control" rows="3" name="txtDesc" id="txtDesc"
+                    placeholder="Ingrese una descripción para la máquina" required></textarea>
                 </div>
               </div>
               <div class="col-md-12">
                 <div class="form-group mb-3">
                   <label for="txtEnlace">Enlace tutorial</label>
-                  <input
-                    name="txtEnlace"
-                    id="txtEnlace"
-                    type="text"
-                    class="form-control"
-                    placeholder="Insertar enlace del tutorial"
-                    required
-                  />
+                  <input name="txtEnlace" id="txtEnlace" type="text" class="form-control"
+                    placeholder="Insertar enlace del tutorial" required />
+                </div>
+              </div>
+
+              <div class="col-md-9">
+                <div class="form-group mb-6">
+                  <label for="txtImagen">Imagen <small>*</small></label>
+                  <input name="txtImagen" id="txtImagen" type="file" class="form-control" accept=".jpg,.png" />
                 </div>
               </div>
             </div>
@@ -121,208 +105,119 @@
   </div>
 </div>
 
-<!-- MODAL AGREGAR UNA ZONA MUSCULAR -->
-<div
-  class="modal fade"
-  id="modalAgregarZona"
-  tabindex="-1"
-  aria-labelledby="modalAgregarZonaLabel"
-  aria-hidden="true"
->
+
+<!-- ========================= MODAL PARA ESCANEAR CODIGO QR ========================= -->
+<div class="modal fade" id="modalQR" tabindex="-1" aria-labelledby="modalQR"
+  aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-success text-white">
-        <h5 class="modal-title" id="modalAgregarMaquinaLabel">
-          <i class="bi bi-justify"></i> Crear nueva máquina
+        <h5 class="modal-title" id="modalQRLabel">
+          <i class="bi bi-qr-code-scan"></i> Escanear una máquina con tu telefono
         </h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form
-          id="agregarMaquinaForm"
-          action="/agregarMaquinaForm"
-          method="POST"
-          enctype="multipart/form-data"
-        >
-          {% csrf_token %}
-          <div class="container mt-5 mb-5">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group mb-3">
-                  <label for="txtMaquina"
-                    >Nombre de la máquina<small> *</small></label
-                  >
-                  <input
-                    name="txtMaquina"
-                    id="txtMaquina"
-                    type="text"
-                    class="form-control"
-                    placeholder="Agregar el nombre"
-                    required
-                  />
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div class="form-group mb-3">
-                  <label for="txtZona">Zona muscular<small> *</small></label>
-                  <input
-                    name="txtZona"
-                    id="txtZona"
-                    type="text"
-                    class="form-control"
-                    placeholder="Ejemplo: Piernas, Pecho, Tricep, etc"
-                    required
-                  />
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div class="form-group mb-3">
-                  <label for="txtDesc" class="form-label"
-                    >Descripción<small> *</small></label
-                  >
-                  <textarea
-                    class="form-control"
-                    rows="3"
-                    name="txtDesc"
-                    id="txtDesc"
-                    placeholder="Ingrese una descripción para la máquina"
-                    required
-                  ></textarea>
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div class="form-group mb-3">
-                  <label for="txtEnlace"
-                    >Enlace tutorial<small> *</small></label
-                  >
-                  <input
-                    name="txtEnlace"
-                    id="txtEnlace"
-                    type="text"
-                    class="form-control"
-                    placeholder="Insertar enlace del tutorial"
-                    required
-                  />
-                </div>
-              </div>
+       <!-- CONTENIDO -->
+
+       <a class="btn btn-warning mt-4 mb-2" id="scanButton">
+        <i class="bi bi-camera"></i> Escanear una máquina
+      </a>
+      
+      <div class="container mt-5">
+        <div class="row justify-content-center">
+          <div class="col-4">
+            <div class="camera-square d-flex justify-content-center align-items-center">
+              <!-- Contenido adicional -->
             </div>
           </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-success">Enviar</button>
-          </div>
-        </form>
+        </div>
+      </div>
       </div>
     </div>
   </div>
 </div>
 
+
+<!-- ========================= CONTENIDO PARA LOS USUARIOS GYMUSER ========================= -->
 <div class="container">
   <div class="row">
     {% if tipoUsuario == 'gymuser' %}
-    <div class="col-md-12 d-flex flex-column">
-      <!-- Aquí puedes colocar otros elementos en tu página -->
 
-      <!-- Alinea el botón al centro verticalmente -->
-      <div class="mt-auto">
-        <a class="btn btn-primary mt-4 mb-2" id="scanButton">
-          <i class="bi bi-camera"></i> Escanear una máquina con QR
-        </a>
-      </div>
-    </div>
-    <div class="col-md-8 d-flex flex-column">
-      <div class="align-self-center" id="cameraContainer"></div>
-    </div>
   </div>
   {% endif %} {% if tipoUsuario == 'gymespacio' %}
   <div class="container mt-4 mb-4">
     <div class="row">
       <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="table-responsive">
-          <table
-            id="miTabla"
-            class="table table-striped table-hover table-bordered"
-          >
-            <thead class="table-dark">
+
+          <!-- TABLA DE MAQUINAS PARA ADMINISTRADOR -->
+          <table id="datatable_maquinas" class="table table-striped table-hover table-bordered">
+            <caption>
+              Lista de maquinas
+            </caption>
+            <thead>
               <tr>
-                <th class="centered" scope="col">ID</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Zona Muscular</th>
-                <th scope="col">Descripción</th>
-                <th scope="col">Enlace Tutorial</th>
-                <th class="centered" scope="col">QR</th>
-                <th class="centered" scope="col">Acciones</th>
+                <th class="centered">ID</th>
+                <th class="centered">Nombre</th>
+                <th class="centered">Zona Muscular</th>
+                <th class="centered">Descripción</th>
+                <th class="centered">Imagen</th>
+                <th class="centered">QR</th>
+                <th class="centered">Acciones</th>
               </tr>
             </thead>
-            <tbody>
-              {% for m in maq %}
+            <tbody id="tableBody_maquinas"></tbody>
+            <!-- {% for m in maq %}
               <tr>
                 <th scope="row">{{m.id}}</th>
                 <td>{{m.nombre}}</td>
                 <td class="bg-success text-white">{{m.zona_muscular}}</td>
                 <td>{{m.descripcion}}</td>
-                <td>
-                  <a href="{{ m.enlace_tutorial }}" target="_blank"
-                    >{{ m.enlace_tutorial }}</a
-                  >
-                </td>
+                <td><img src="{{m.imagen.url}}" height="100" /></td>
                 <td><img src="{{m.qr_code.url}}" height="100" /></td>
 
                 <td>
-                  <!-- Botón de descarga -->
-                  <a
-                    href="{% static m.qr_code.url %}"
-                    download="codigo_qr.png"
-                    class="btn btn-success btn-sm"
-                    title="Descargar el código QR"
-                  >
-                    <i class="bi bi-download"></i>
-                  </a>
-
-                  <!-- Botón de editar -->
-                  <a
-                    href="/editarMaquina/{{ m.id }}"
-                    class="btn btn-primary btn-sm"
-                    title="Editar maquina"
-                  >
-                    <i class="bi bi-pencil-square"></i>
-                  </a>
-
-                  <!-- Botón de eliminar -->
-                  <a
-                    href="/eliminarMaquina/{{ m.id }}"
-                    class="btn btn-danger btn-sm"
-                    title="Eliminar maquina"
-                  >
-                    <i class="bi bi-trash"></i>
-                  </a>
+                  <div class="dropdown">
+                  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                      Acción
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                      <li>
+                          <a href="{{m.qr_code.url}}" download="codigo_qr.png" class="dropdown-item" title="Descargar el código QR">
+                              <i class="bi bi-download"></i> Descargar QR
+                          </a>
+                      </li>
+                      <li>
+                          <a href="/editarMaquina/{{ m.id }}" class="dropdown-item" title="Editar máquina">
+                              <i class="bi bi-pencil-square"></i> Editar
+                          </a>
+                      </li>
+                      <li>
+                          <a href="/eliminarMaquina/{{ m.id }}" class="dropdown-item btnEliminacion" title="Eliminar máquina">
+                              <i class="bi bi-trash"></i> Eliminar
+                          </a>
+                      </li>
+                  </ul>
+              </div>
                 </td>
               </tr>
-              {% endfor %}
-            </tbody>
+              {% endfor %} -->
           </table>
         </div>
       </div>
 
-      {% endif %} {% if tipoUsuario == 'gymuser' %}
+      {% endif %}
+
+      {% if tipoUsuario == 'gymuser' %}
       <section class="mt-4 mb-4">
         <div class="container">
-          <h2 class="mb-5">Máquinas y sus tutoriales</h2>
-          <div
-            class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 justify-content-center"
-          >
+          <h2 class="mb-5">Total de maquinas ({{tot}})</h2>
+          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 justify-content-center">
             {% for m in maq %}
             <div class="col mb-4">
               <div class="card" style="width: 18rem">
-                <img
-                  src="static/img/pesas.png"
-                  class="card-img-top"
-                  alt="..."
-                />
+                <img src="{{m.imagen.url}}" class="card-img-top" alt="..." />
                 <div class="card-body">
                   <h5 class="card-title">{{m.nombre}}</h5>
                   <p class="card-text">{{m.descripcion}}</p>
@@ -332,13 +227,13 @@
                     <strong>Zona muscular:</strong> {{m.zona_muscular}}
                   </li>
                 </ul>
+
                 <div class="card-body">
-                  <a
-                    href="{{m.enlace_tutorial}}"
-                    target="_blank"
-                    class="card-link"
-                    >Video tutorial</a
-                  >
+                  <div class="d-grid gap-2">
+                    <a href="/maquina/{{m.id}}" class="btn btn-outline-success" type="button">
+                      Ver tutorial
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -350,7 +245,16 @@
     </div>
   </div>
 
+
   {% endblock %} {% block script %}
+    <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+  <!-- SwetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- JS Personalizado -->
+  <script src="{% static 'js/utils/notificacionSwal.js' %}"></script>
+  <script src="{% static 'js/eliminacion.js' %}"></script>
+
   <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
   <script src="{% static 'js/ScanQR.js' %}"></script>
   <script>
@@ -359,9 +263,17 @@
         $("#modalAgregarMaquina").modal("show");
       });
 
-      // ZONA MUSCULAR
+      $("#btnEscanear").click(function () {
+        $("#modalQR").modal("show");
+      });
+
     });
   </script>
+  
+  <script src="{% static 'js/maquinas.js' %}"></script>
+  <!-- DataTable.js -->
+  <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
 
   {% endblock script %}
 </div>
