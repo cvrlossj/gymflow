@@ -22,23 +22,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const scanner = new Instascan.Scanner({ video: videoElement });
             scanner.addListener('scan', function(content) {
-              const qrContent = content;
-              const qrData = JSON.parse(qrContent);
+              try {
+                const qrData = JSON.parse(content);
 
-              // Actualizar el contenido del modal con la información del código QR
-              machineName.innerText = qrData.nombre;
-              machineDescription.innerText = qrData.descripcion;
-              machineID.innerText = qrData.id;
-              machineZone.innerText = qrData.zona_muscular;
-              tutorialIframe.src = `https://www.youtube.com/embed/${qrData.enlace_tutorial}`;
+                // Actualizar los campos en el HTML con la información del QR
+                machineName.innerText = qrData.nombre;
+                machineDescription.innerText = qrData.descripcion;
+                machineID.innerText = qrData.id;
+                machineZone.innerText = qrData.zona_muscular;
+                tutorialIframe.src = `https://www.youtube.com/embed/${qrData.enlace_tutorial}`;
 
-              // Mostrar los detalles de la máquina en el modal
-              machineDetails.style.display = 'block';
+                // Mostrar los detalles de la máquina en el modal
+                machineDetails.style.display = 'block';
 
-              // Detener la cámara y limpiar
-              cameraActive = false;
-              stream.getTracks().forEach(track => track.stop());
-              cameraContainer.style.display = 'none';
+                // Detener la cámara y limpiar
+                cameraActive = false;
+                stream.getTracks().forEach(track => track.stop());
+                cameraContainer.style.display = 'none';
+              } catch (error) {
+                console.error('Error al parsear el contenido del QR:', error);
+              }
             });
 
             Instascan.Camera.getCameras().then(function(cameras) {
@@ -58,4 +61,23 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
   });
+
+
+  document.getElementById('closeCameraButton').addEventListener('click', function() {
+    if (cameraActive) {
+      navigator.mediaDevices.getUserMedia({ video: true }) // Obtener acceso a la cámara
+        .then(function(stream) {
+          const tracks = stream.getTracks(); // Obtener los tracks de la cámara
+          tracks.forEach(track => track.stop()); // Detener cada track (en este caso, la cámara)
+          cameraActive = false; // Actualizar el estado de la cámara
+          videoElement.srcObject = null; // Detener el stream de la cámara
+          cameraContainer.style.display = 'none'; // Ocultar el contenedor de la cámara
+        })
+        .catch(function(error) {
+          console.error('Error al apagar la cámara:', error);
+        });
+    }
+  });
+  
+
 });

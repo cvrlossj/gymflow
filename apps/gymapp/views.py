@@ -11,6 +11,7 @@ from django.contrib import messages
 
 # Para extraer id del video y poder insertar el video
 from urllib.parse import urlparse, parse_qs
+import json
 
 # CODIGO QR
 import qrcode
@@ -55,12 +56,21 @@ def agregarMaquina(request):
     else:
         pass
 
-    data_fot_qr = f"Nombre: {m_nombre}\nZona muscular: {m_zona_muscular}\nDescripción: {m_descripcion}\nEnlace tutorial: {m_enlace}" 
+    # Crear un diccionario con la información de la máquina
+    maquina_info = {
+        'nombre': m_nombre,
+        'zona_muscular': m_zona_muscular,
+        'descripcion': m_descripcion,
+        'enlace_tutorial': video_id 
+    }
 
-    # Genera el código QR basado en el nombre
+    
+    json_data = json.dumps(maquina_info)
+
+
     qr = qrcode.QRCode(
         version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=10, border=1)
-    qr.add_data(data_fot_qr)
+    qr.add_data(json_data)
     qr.make(fit=True)
     img = qr.make_image(fill_color="black", back_color="white")
 
