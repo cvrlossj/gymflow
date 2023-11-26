@@ -25,6 +25,15 @@ urlpatterns = [
     path('editarEntrenadorForm', views.editarEntrenador),
     path('eliminarEntrenador/<id>', views.eliminarEntrenador),
 
+    # GymUser
+    path('gymuser', views.cargarGymUser),
+    path('agregarUsuarioForm', views.agregarGymUser),
+    path('editarUsuario/<id>', views.cargarEditarUsuario),
+    path('editarUsuarioForm', views.editarUsuario),
+
+    path('eliminarUsuario/<id>', views.eliminarGymUser),
+
+
     # Inicar sesión 
     path('accederUser', views.cargarAccederUser),
     path('iniciarSesionFormUser',views.iniciarSesion),

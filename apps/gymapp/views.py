@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 import os
 from django.conf import settings
+from datetime import datetime
+from django.contrib import messages
 
 
 # Para extraer id del video y poder insertar el video
@@ -53,10 +55,12 @@ def agregarMaquina(request):
     else:
         pass
 
+    data_fot_qr = f"Nombre: {m_nombre}\nZona muscular: {m_zona_muscular}\nDescripción: {m_descripcion}\nEnlace tutorial: {m_enlace}" 
+
     # Genera el código QR basado en el nombre
     qr = qrcode.QRCode(
         version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=10, border=1)
-    qr.add_data(m_nombre)
+    qr.add_data(data_fot_qr)
     qr.make(fit=True)
     img = qr.make_image(fill_color="black", back_color="white")
 
@@ -143,16 +147,13 @@ def cargarPerfilGymEspacio(request):
 
 
 
-# Entrenadores
-
-
+# Entrenadores - LISTAR
 def cargarEntrenadores(request):
     tipoUsuario = request.session.get('tipoUsuario', None)
     gimnasio = GymEspacio.objects.all()
     entrenadores = Entrenador.objects.all()
     entrenadores_cont = Entrenador.objects.count()
     return render(request, "listaEntrenadores.html", {"gim": gimnasio, "ent": entrenadores, "tipoUsuario": tipoUsuario, "tot": entrenadores_cont})
-
 
 
 
@@ -186,8 +187,6 @@ def agregarEntrenador(request):
     return redirect('/entrenadores')
 
 
-
-
 # Editar - Entrenador
 def cargarEditarEntrenador(request, id):
     tipoUsuario = request.session.get('tipoUsuario', None)
@@ -196,7 +195,7 @@ def cargarEditarEntrenador(request, id):
     return render(request, "editarEntrenador.html", {"ent": entrenador, "gim": gimnasio, "tipoUsuario": tipoUsuario})
 
 
-
+# Editar - Entrenador
 def editarEntrenador(request):
     e_id = request.POST['txtId']
     entrenadorBD = Entrenador.objects.get(id=e_id)
@@ -206,7 +205,6 @@ def editarEntrenador(request):
     e_precio = request.POST['txtPrecio']
     e_correo = request.POST['txtCorreo']
     e_password = request.POST['txtPassword']
-    e_gim = GymEspacio.objects.get(id=request.POST['cmbGim'])
 
     try:
         e_img = request.FILES['txtImagen']
@@ -219,7 +217,6 @@ def editarEntrenador(request):
 
     entrenadorBD.nombre = e_nombre
     entrenadorBD.apellido = e_apellido
-    entrenadorBD.id_gymespacio = e_gim
     entrenadorBD.servicios = e_servicios
     entrenadorBD.correo = e_correo
     entrenadorBD.contrasenia = e_password
@@ -230,6 +227,7 @@ def editarEntrenador(request):
 
     return redirect('/entrenadores')
 
+# Eliminar - Entrenador
 def eliminarEntrenador(request, id):
     entrenador = Entrenador.objects.get(id=id)
     ruta_imagen = os.path.join(settings.MEDIA_ROOT, str(entrenador.foto_perfil))
@@ -238,12 +236,94 @@ def eliminarEntrenador(request, id):
     return redirect('/entrenadores')
 
 
-
-
-# Login de gym user
-def cargarAccederUser(request):
+# GYMUSER
+def cargarGymUser(request):
     tipoUsuario = request.session.get('tipoUsuario', None)
-    return render(request, "loginUser.html", {"tipoUsuario": tipoUsuario})
+    gimnasio = GymEspacio.objects.all()
+    gymuser = GymUser.objects.all()
+    gymuser_cont = GymUser.objects.count()
+    return render(request, "listaUsuarios.html", {"gim": gimnasio, "gusr": gymuser, "tipoUsuario": tipoUsuario, "tot": gymuser_cont})
+
+
+def agregarGymUser(request):
+    gu_nombre = request.POST['txtUsuario']
+    gu_apellido = request.POST['txtApellido']
+    gu_correo = request.POST['txtCorreo']
+    gu_contrasenia = request.POST['txtPassword']
+    gu_tipo = request.POST['txtTipo']
+    gu_img = request.FILES['txtImagen']
+
+    # Obtén el ID del gimnasio como un número entero.
+    gu_gimnasio_id = request.POST['cmbGim']
+    gimnasio = GymEspacio.objects.get(id=gu_gimnasio_id)
+
+    gu_peso = request.POST['txtPeso']
+    gu_altura = request.POST['txtAltura']
+    gu_fecha_inscripcion = request.POST['dateInscripcion']
+
+    fecha_inscripcion = datetime.strptime(gu_fecha_inscripcion,'%Y-%m-%d').date()
+
+
+    nuevo_usuario = GymUser.objects.create(
+        nombre=gu_nombre, 
+        apellido=gu_apellido, 
+        correo=gu_correo,
+        contrasenia=gu_contrasenia,
+        id_tipo_id=gu_tipo,
+        foto_perfil=gu_img,
+        id_gymespacio=gimnasio,
+        peso=gu_peso,
+        altura=gu_altura,
+        fecha_inscripcion=fecha_inscripcion
+    )
+
+    return redirect('/gymuser')
+    
+
+# Editar - Gymuser [cargar info]
+def cargarEditarUsuario(request, id):
+    tipoUsuario = request.session.get('tipoUsuario', None)
+    gymuser = GymUser.objects.get(id=id)
+    gimnasio = GymEspacio.objects.all()
+    return render(request, "editarUsuario.html",{"gusr": gymuser, "tipoUsuario": tipoUsuario})
+
+
+def editarUsuario(request):
+    gu_id = request.POST['txtId']
+    gymUserBD = GymUser.objects.get(id=gu_id)
+    gu_nombre = request.POST['txtUsuario']
+    gu_apellido = request.POST['txtApellido']
+    gu_correo = request.POST['txtCorreo']
+    gu_password = request.POST['txtPassword']
+    gu_peso = request.POST['txtPeso']
+    gu_altura = request.POST['txtAltura']
+
+    try:
+        gu_img = request.FILES['txtImagen']
+        ruta_imagen = os.path.join(
+            settings.MEDIA_ROOT, str(gymUserBD.foto_perfil))
+        os.remove(ruta_imagen)
+    except:
+        gu_img = gymUserBD.foto_perfil
+    
+    gymUserBD.nombre = gu_nombre
+    gymUserBD.apellido = gu_apellido
+    gymUserBD.correo = gu_correo
+    gymUserBD.contrasenia = gu_password
+    gymUserBD.peso = gu_peso
+    gymUserBD.altura = gu_altura
+    gymUserBD.foto_perfil = gu_img
+
+    gymUserBD.save()
+    return redirect('/gymuser')
+
+# Eliminar - GymUser
+def eliminarGymUser(request, id):
+    gymuser = GymUser.objects.get(id=id)
+    ruta_imagen = os.path.join(settings.MEDIA_ROOT, str(gymuser.foto_perfil))
+    os.remove(ruta_imagen)
+    gymuser.delete()
+    return redirect('/gymuser')
 
 
 # Iniciar sesión - TODOS LOS ROLES
@@ -252,28 +332,28 @@ def iniciarSesion(request):
         correo = request.POST.get('txtCorreo')
         contrasenia = request.POST.get('txtContrasenia')
 
-        usuarios = UsuarioPadre.objects.filter(correo=correo)
-        if usuarios.exists():
-            usuario = usuarios.first()
-            if usuario.contrasenia == contrasenia:
-                request.session['tipoUsuario'] = usuario.id_tipo.nombre_tipo
-                request.session['usuario_id'] = usuario.id
+        try:
+            usuarios = UsuarioPadre.objects.filter(correo=correo)
+            if usuarios.exists():
+                usuario = usuarios.first()
+                if usuario.contrasenia == contrasenia:
+                    request.session['tipoUsuario'] = usuario.id_tipo.nombre_tipo
+                    request.session['usuario_id'] = usuario.id
 
-                if usuario.id_tipo.id_tipo == 1:
-                    return redirect('/maquinas')
-                elif usuario.id_tipo.id_tipo == 2:
-                    return redirect('/maquinas')
-                elif usuario.id_tipo.id_tipo == 3:
-                    return redirect('/maquinas')
+                    if usuario.id_tipo.id_tipo in [1, 2, 3]:
+                        return redirect('/maquinas')
+                    else:
+                        return redirect('/login')
                 else:
-                    return redirect('/')
+                    mensaje = 'Contraseña incorrecta'
+                    return render(request, 'loginUser.html', {'mensaje': mensaje, 'correo': correo})
             else:
-                mensaje = 'Contraseña incorrecta'
+                mensaje = 'El correo no está registrado'
                 return render(request, 'loginUser.html', {'mensaje': mensaje, 'correo': correo})
-        else:
-            mensaje = 'El correo no está registrado'
-            return render(request, 'loginUser.html', {'mensaje': mensaje, 'correo': correo})
-
+        except Exception as e:
+            messages.error(request, f"Error: {e}")
+            return redirect('/login')
+    return render(request, 'loginUser.html')
 
 # Cerrar sesión
 def cerrarSesion(request):
@@ -288,3 +368,9 @@ def cargarDetalleMaquina(request, id):
     maquinas = Maquina.objects.get(id=id)
     return render(request, "detalleMaquinas.html", {"maq": maquinas, "tipoUsuario": tipoUsuario})
 
+
+
+# Login de gym user
+def cargarAccederUser(request):
+    tipoUsuario = request.session.get('tipoUsuario', None)
+    return render(request, "loginUser.html", {"tipoUsuario": tipoUsuario})

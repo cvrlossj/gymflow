@@ -1,0 +1,249 @@
+{% extends "baseGymEspacio.html" %}
+{% load static %}
+
+{% block head %}
+<title>Lista de Usuarios</title>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock head %}
+
+
+{% block body %}
+
+
+<!-- ========================= MODAL PARA AGREGAR USUARIOS ========================= -->
+<div class="modal fade" id="agregarUsuarios" tabindex="-1" aria-labelledby="modalAgregarUsuariolabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="modalAgregarUsuariolabel">
+          <i class="bi bi-people-fill"></i> Agregar un GymUser
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+
+        <form id="agregarUsuarioForm" action="/agregarUsuarioForm" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="container mt-5 mb-5">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group mb-3">
+                  <label for="txtUsuario">Nombre<small> *</small></label>
+                  <input
+                    name="txtUsuario"
+                    id="txtUsuario"
+                    type="text"
+                    class="form-control"
+                    placeholder="John"
+                    required
+                  />
+                </div>
+              </div>
+        
+              <div class="col-md-4">
+                <div class="form-group mb-3">
+                  <label for="txtApellido">Apellido<small> *</small></label>
+                  <input
+                    name="txtApellido"
+                    id="txtApellido"
+                    type="text"
+                    class="form-control"
+                    placeholder="Doe"
+                    required
+                  />
+                </div>
+              </div>
+        
+        
+              <div class="col-md-4">
+                <div class="form-group mb-3">
+                  <label for="cmbGim">Gimnasio<small> *</small></label>
+                  <select name="cmbGim" id="cmbGim" class="form-select"> 
+                    <option disabled selected>Seleccione</option>
+                    {% for g in gim %}
+                    <option value="{{g.id}}">{{g.nombre}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+        
+              <div class="col-md-4">
+                <div class="form-group mb-3">
+                  <label for="dateInscripcion">Fecha inscripción<small> *</small></label>
+                  <input
+                    name="dateInscripcion"
+                    id="dateInscripcion"
+                    type="date"
+                    class="form-control"
+                    required
+                  />
+                </div>
+              </div>
+        
+              <div class="col-md-4">
+                <div class="form-group mb-3">
+                  <label for="txtCorreo">Correo<small> *</small></label>
+                  <input
+                    name="txtCorreo"
+                    id="txtCorreo"
+                    type="text"
+                    class="form-control"
+                    placeholder="johndoe@gmail.com"
+                    required
+                  />
+                </div>
+              </div>
+        
+              <div class="col-md-4">
+                <div class="form-group mb-3">
+                  <label for="txtPassword">Contraseña<small> *</small></label>
+                  <input
+                    name="txtPassword"
+                    id="txtPassword"
+                    type="password"
+                    class="form-control"
+                    required
+                  />
+                </div>
+              </div>
+              <br>
+              <br>
+              <br>      
+
+              <div>
+                <span class="badge bg-success fs-6 p-3">Información adicional</span>
+              </div>
+              <br>
+              <br>
+              <br>
+              
+              <div class="col-md-3">
+                <div class="form-group mb-3">
+                  <label for="txtPeso">Peso<small> *</small></label>
+                  <input
+                    name="txtPeso"
+                    id="txtPeso"
+                    type="number"
+                    min="0"
+                    class="form-control"
+                    placeholder="Kg"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group mb-3">
+                  <label for="txtAltura">Altura<small> *</small></label>
+                  <input
+                    name="txtAltura"
+                    id="txtAltura"
+                    type="number"
+                    min="0"
+                    class="form-control"
+                    placeholder="Cm"
+                    required
+                  />
+                </div>
+              </div>
+        
+              <div class="col-md-3" hidden>
+                <div class="form-group mb-3">
+                  <label for="txtTipo">Tipo usuario<small> *</small></label>
+                  <input
+                    value="3"
+                    name="txtTipo"
+                    id="txtTipo"
+                    type="text"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group mb-6">
+                  <label for="txtImagen">Foto Perfil <small>*</small></label>
+                  <input name="txtImagen" id="txtImagen" type="file" class="form-control" accept=".jpg,.png" />
+                </div>
+              </div>
+            </div>
+            
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Enviar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========================= LISTA DE GYMUSER ========================= -->
+<div class="container">
+    <a
+    href="#agregarUsuarios"
+    class="btn btn-light btn-sm mt-4 mb-2"
+    id="btnCreate"
+    data-bs-toggle="modal"
+    ><i class="bi bi-person-fill-add"></i> Agregar un gymuser</a>
+    <hr class="my-4" />
+  </div>
+<!-- ========================= LISTA DE GYMUSER ========================= -->
+<section class="">
+  <div class="container mt-4 mb-4">
+    <span class="badge bg-warning fs-3 p-3">Usuarios: ({{tot}})</span>
+    <br>
+    <br>
+    <br>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+      {% for u in gusr %}  
+      <div class="col mb-3">
+        <div class="card h-100 border-success"> <!-- Agregar clase border-success para el borde estilo success -->
+          <div class="badge bg-primary text-white position-absolute" style="top: 0.5rem; right: 0.5rem">{{e.id}}</div>
+          <!-- Imagen de Entrenadores (general)-->
+          <img class="card-img-top" src="{{u.foto_perfil.url}}" alt="..." style="max-height: 500px; object-fit: cover;" />
+          <!-- Detalles entrenador-->
+          <div class="card-body p-3">
+            <div class="text-center">
+              <!-- Nombre entrenador-->
+              <h5 class="fw-bolder fs-5">{{u.nombre}} {{u.apellido}}</h5>
+              <!-- Servicios entrenador-->
+              <p class="text-muted mb-1">Fecha inscripcion {{u.fecha_inscripcion}}</p>
+            </div>
+          </div>
+          <!-- acciones entrenador-->
+          <div class="card-footer p-3 pt-0 border-top-0 bg-transparent">
+            <div class="text-center">
+              <a href="/editarUsuario/{{u.id}}" class="btn btn-primary btn-sm me-2"><i class="bi bi-pencil-square"></i> Editar</a>
+              <a href="/eliminarUsuario/{{u.id}}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Eliminar</a>                    
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+
+{% endblock body %}
+
+{% block script %}
+<script>
+  $(document).ready(function () {
+    $("#btnCreate").click(function () {
+      $("#agregarUsuarios").modal("show");
+    });
+
+    // ZONA MUSCULAR
+  });
+</script>
+{% endblock script%}
+
+
+

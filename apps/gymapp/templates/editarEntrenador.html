@@ -69,17 +69,7 @@
                 </div>
           
           
-                <div class="col-md-3">
-                  <div class="form-group mb-3">
-                    <label class="fw-bold" for="cmbGim">Gimnasio<small class="fw-bold text-danger"> *</small></label>
-                    <select name="cmbGim" id="cmbGim" class="form-select"> 
-                      <option disabled selected>Seleccione</option>
-                      {% for g in gim %}
-                        <option value="{{g.id}}" {% if g.id == ent.id_gymespacio.id %} selected {% endif %}>{{g.nombre}}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                </div>
+              
                 
                 <div class="col-md-12">
                   <div class="form-group mb-3">
@@ -116,7 +106,7 @@
                       value="{{ent.contrasenia}}"
                       name="txtPassword"
                       id="txtPassword"
-                      type="password"
+                      type="text"
                       class="form-control"
                     />
                   </div>

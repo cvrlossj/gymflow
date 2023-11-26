@@ -6,11 +6,29 @@
 <!-- DataTable.js -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 <style>
-  .camera-square {
-    height: 300px; /* Ajusta la altura según tu preferencia */
-    width: 300px;
-    background-color: #f0f0f0; /* Cambia el color de fondo */
-    border: 3px solid #333; /* Borde más delgado y color gris */
+  /* Estilos para el contenedor de la cámara */
+  #cameraContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto; /* Altura automática para adaptarse al contenido */
+    max-width: 100%; /* Ancho máximo para adaptarse al modal */
+    margin: 0 auto;
+    border: 2px solid #000;
+    position: relative;
+    overflow: hidden; /* Oculta cualquier desbordamiento */
+  }
+
+  /* Estilos para simular la cámara de código QR */
+  #videoElement {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    background: black;
   }
 </style>
 {% endblock %} {% block body %}
@@ -24,7 +42,7 @@
       <h1 class="display-4 fw-bolder">🏋️‍♀️ Lista de Maquinas 🏋️‍♀️</h1>
       <div class="col-md-12 d-flex flex-column">
         <div class="mt-auto">
-          <a href="#modalQR" class="btn btn-warning mt-4 mb-2" id="btnEscanear">
+          <a href="#modalQR" class="btn btn-warning mt-4 mb-2" id="btnEscanear" data-bs-toggle="modal"> 
             <i class="bi bi-camera"></i> Escanear una máquina
           </a>
         </div>
@@ -107,36 +125,49 @@
 
 
 <!-- ========================= MODAL PARA ESCANEAR CODIGO QR ========================= -->
-<div class="modal fade" id="modalQR" tabindex="-1" aria-labelledby="modalQR"
-  aria-hidden="true">
+<div class="modal fade" id="modalQR" tabindex="-1" aria-labelledby="modalQR" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-success text-white">
         <h5 class="modal-title" id="modalQRLabel">
-          <i class="bi bi-qr-code-scan"></i> Escanear una máquina con tu telefono
+          <i class="bi bi-qr-code-scan"></i> Escanear una máquina con tu teléfono
         </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-       <!-- CONTENIDO -->
+        <!-- Contenido del modal -->
+        <a class="btn btn-warning mt-4 mb-2" id="scanButton">
+          <i class="bi bi-camera"></i> Escanear una máquina
+        </a>
 
-       <a class="btn btn-warning mt-4 mb-2" id="scanButton">
-        <i class="bi bi-camera"></i> Escanear una máquina
-      </a>
-      
-      <div class="container mt-5">
-        <div class="row justify-content-center">
-          <div class="col-4">
-            <div class="camera-square d-flex justify-content-center align-items-center">
-              <!-- Contenido adicional -->
+        <!-- Contenedor para la cámara -->
+        <div id="cameraContainer" style="display: none;">
+          <video id="videoElement" autoplay></video>
+        </div>
+
+        <div class="container mt-5">
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+              <div class="card" id="machineDetails" style="display: none;">
+                <div class="card-body">
+                  <h3 class="card-title">Ver tutorial</h3>
+                  <iframe width="820" height="500" id="tutorialIframe" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+                  <h3 class="card-title">Detalles de la Máquina</h3>
+                  <p class="card-text"><b>Nombre:</b> <span id="machineName"></span></p>
+                  <p class="card-text"><b>Descripción:</b> <span id="machineDescription"></span></p>
+                  <p class="card-text"><b>Código:</b> <span id="machineID"></span></p>
+                  <span class="badge bg-success fs-6 p-2" id="machineZone"></span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      </div>
     </div>
   </div>
 </div>
+
 
 
 <!-- ========================= CONTENIDO PARA LOS USUARIOS GYMUSER ========================= -->
@@ -210,27 +241,27 @@
       {% endif %}
 
       {% if tipoUsuario == 'gymuser' %}
+      
       <section class="mt-4 mb-4">
         <div class="container">
-          <h2 class="mb-5">Total de maquinas ({{tot}})</h2>
-          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 justify-content-center">
+          <h2 class="mb-5">Total de maquinas ({{ tot }})</h2>
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 justify-content-center">
             {% for m in maq %}
             <div class="col mb-4">
-              <div class="card" style="width: 18rem">
-                <img src="{{m.imagen.url}}" class="card-img-top" alt="..." />
+              <div class="card">
+                <img src="{{ m.imagen.url }}" class="card-img-top" alt="..." />
                 <div class="card-body">
-                  <h5 class="card-title">{{m.nombre}}</h5>
-                  <p class="card-text">{{m.descripcion}}</p>
+                  <h5 class="card-title">{{ m.nombre }}</h5>
+                  <p class="card-text">{{ m.descripcion }}</p>
                 </div>
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item">
-                    <strong>Zona muscular:</strong> {{m.zona_muscular}}
+                    <strong>Zona muscular:</strong> {{ m.zona_muscular }}
                   </li>
                 </ul>
-
                 <div class="card-body">
-                  <div class="d-grid gap-2">
-                    <a href="/maquina/{{m.id}}" class="btn btn-outline-success" type="button">
+                  <div class="d-grid">
+                    <a href="/maquina/{{ m.id }}" class="btn btn-outline-success" type="button">
                       Ver tutorial
                     </a>
                   </div>
@@ -242,9 +273,6 @@
         </div>
       </section>
       {% endif %}
-    </div>
-  </div>
-
 
   {% endblock %} {% block script %}
     <!-- jQuery -->

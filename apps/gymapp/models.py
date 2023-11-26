@@ -30,7 +30,7 @@ class Maquina(models.Model):
 
 
 class UsuarioPadre(models.Model):
-    nombre = models.CharField(max_length=50)
+    nombre = models.CharField(max_length=50) 
     apellido = models.CharField(max_length=50)
     correo = models.CharField(max_length=100)
     contrasenia = models.CharField(max_length=25)

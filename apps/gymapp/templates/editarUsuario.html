@@ -1,0 +1,179 @@
+{% extends "baseGymEspacio.html" %} {% load static %} {% block head %}
+<title>Editar gymuser</title>
+{% endblock %} 
+
+{% block body %}
+<!-- Header-->
+<header class="bg-warning py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Editar GymUser</h1>
+    </div>
+  </div>
+</header>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <div class="card">
+        <h5 class="card-header">Campos obligatorios *</h5>
+        <div class="card-body">
+          <form action="/editarUsuarioForm" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="container mt-5 mb-5">
+              <div class="row">
+                <div class="col-md-1">
+                  <div class="form-group mb-3">
+                    <label class="fw-bold" for="txtMaquina">ID<small class="fw-bold text-danger"> *</small></label>
+                    <input
+                      readonly
+                      value="{{gusr.id}}"
+                      name="txtId"
+                      id="txtId"
+                      type="text"
+                      class="form-control"
+                      placeholder="ID"
+                    />
+                  </div>
+                </div>
+
+
+                <div class="col-md-3">
+                  <div class="form-group mb-3">
+                    <label for="txtUsuario">Nombre<small> *</small></label>
+                    <input
+                      value="{{gusr.nombre}}"
+                      name="txtUsuario"
+                      id="txtUsuario"
+                      type="text"
+                      class="form-control"
+                      placeholder="John"
+                      required
+                    />
+                  </div>
+                </div>
+          
+                <div class="col-md-3">
+                  <div class="form-group mb-3">
+                    <label for="txtApellido">Apellido<small> *</small></label>
+                    <input
+                      value={{gusr.apellido}}
+                      name="txtApellido"
+                      id="txtApellido"
+                      type="text"
+                      class="form-control"
+                      placeholder="Doe"
+                      required
+                    />
+                  </div>
+                </div>
+          
+          
+              
+          
+                <div class="col-md-4">
+                  <div class="form-group mb-3">
+                    <label for="txtCorreo">Correo<small> *</small></label>
+                    <input
+                      value="{{gusr.correo}}"
+                      name="txtCorreo"
+                      id="txtCorreo"
+                      type="text"
+                      class="form-control"
+                      placeholder="johndoe@gmail.com"
+                      required
+                    />
+                  </div>
+                </div>
+          
+                <div class="col-md-4">
+                  <div class="form-group mb-3">
+                    <label for="txtPassword">Contraseña<small> *</small></label>
+                    <input
+                      value="{{gusr.contrasenia}}"
+                      name="txtPassword"
+                      id="txtPassword"
+                      type="text"
+                      class="form-control"
+                      required
+                    />
+                  </div>
+                </div>
+                <br>
+                <br>
+                <br>      
+  
+                <div>
+                  <span class="badge bg-success fs-6 p-3">Información adicional</span>
+                </div>
+                <br>
+                <br>
+                <br>
+                
+                <div class="col-md-3">
+                  <div class="form-group mb-3">
+                    <label for="txtPeso">Peso<small> *</small></label>
+                    <input
+                      value={{gusr.peso}}
+                      name="txtPeso"
+                      id="txtPeso"
+                      type="number"
+                      min="0"
+                      class="form-control"
+                      placeholder="Kg"
+                      required
+                    />
+                  </div>
+                </div>
+  
+                <div class="col-md-3">
+                  <div class="form-group mb-3">
+                    <label for="txtAltura">Altura<small> *</small></label>
+                    <input
+                      value={{gusr.altura}}
+                      name="txtAltura"
+                      id="txtAltura"
+                      type="number"
+                      min="0"
+                      class="form-control"
+                      placeholder="Cm"
+                      required
+                    />
+                  </div>
+                </div>
+                  
+  
+                <div class="col-md-6">
+                  <div class="form-group mb-6">
+                    <label for="txtImagen">Foto Perfil <small>*</small></label>
+                    <img src="{{gusr.foto_perfil.url}}" height="100" alt="">
+                    <input name="txtImagen" id="txtImagen" type="file" class="form-control" accept=".jpg,.png" />
+                  </div>
+                </div>
+              </div>
+              
+                          
+            <div id="alerta" class="alert alert-danger" style="display: none"></div>
+          
+            <hr class="my-4" />
+            <div class="form-group mt-2 mb-2">
+              <button id="btnEnviar" type="submit" class="btn btn-success">
+                <i class="bi bi-pencil-square"></i> Editar gymuser
+              </button>
+            </div>
+          </div>
+              </div>
+            </div>
+            </div>
+          </form>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}
