@@ -19,6 +19,7 @@ from django.core.files.base import ContentFile
 from io import BytesIO
 
 
+
 # Inicio de la página - Iniciar Sesión
 def cargarInicio(request):
     tipoUsuario = request.session.get('tipoUsuario', None)
